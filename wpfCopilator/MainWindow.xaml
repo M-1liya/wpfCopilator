@@ -77,41 +77,29 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <!-- Кнопки меню "Файл"-->
-            <Button x:Name="button_Create" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="30" Height="30" Background="Transparent">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="BorderThickness" Value="0"/>
-                    </Style>
-                </Button.Style>
-
+            <Button x:Name="button_Create" Grid.Column="0" Style="{DynamicResource ButtonPanelTool}">
+                
                 <Button.ToolTip>
                     <ToolTip>Создать (Ctrl+N)</ToolTip>
                 </Button.ToolTip>
                 <Image Source="Assets/Create.png"/>
             </Button>
-            <Button x:Name="button_Open" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="40" Height="40" Background="Transparent">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="BorderThickness" Value="0"/>
-                    </Style>
-                </Button.Style>
-
+            <Button x:Name="button_Open" Grid.Column="1" Style="{DynamicResource ButtonPanelTool}">
+                
                 <Button.ToolTip>
                     <ToolTip>Открыть (Ctrl+O)</ToolTip>
                 </Button.ToolTip>
                 <Image Source="Assets/Open.png" Width="38" Height="30"/>
             </Button>
-            <Button x:Name="button_Save" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="40" Height="40" Background="Transparent">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="BorderThickness" Value="0"/>
-                    </Style>
-                </Button.Style>
-
+            <Button x:Name="button_Save" Grid.Column="2" Style="{DynamicResource ButtonPanelTool}">
+                
                 <Button.ToolTip>
                     <ToolTip>Сохранить (Ctrl+S)</ToolTip>
                 </Button.ToolTip>
@@ -119,65 +107,40 @@
             </Button>
 
             <!-- Кнопки меню "Правка"-->
-            <Button x:Name="button_Cancel" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Width="40" Height="40" Background="Transparent">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="BorderThickness" Value="0"/>
-                    </Style>
-                </Button.Style>
-                
+            <Button x:Name="button_Cancel" Grid.Column="4" Style="{DynamicResource ButtonPanelTool}">
+                                
                 <Button.ToolTip>
                     <ToolTip>Отменить (Ctrl+Z)</ToolTip>                    
                 </Button.ToolTip>
 
                 <Image Source="Assets/Cancel.png" Height="30"/>
             </Button>
-            <Button x:Name="button_Return" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" Width="40" Height="40" Background="Transparent">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="BorderThickness" Value="0"/>
-                    </Style>
-                </Button.Style>
-
+            <Button x:Name="button_Return" Grid.Column="5" Style="{DynamicResource ButtonPanelTool}">
+                
                 <Button.ToolTip>
                     <ToolTip>Вернуть (Ctrl+Y)</ToolTip>
                 </Button.ToolTip>
                 
                 <Image Source="Assets/Return.png" Height="30"/>
             </Button>
-            <Button x:Name="button_Copy" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Width="38" Height="38" Background="Transparent">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="BorderThickness" Value="0"/>
-                    </Style>
-                </Button.Style>
-
+            <Button x:Name="button_Copy" Grid.Column="6" Style="{DynamicResource ButtonPanelTool}">
+                
                 <Button.ToolTip>
                     <ToolTip>Копировать (Ctrl+C)</ToolTip>
                 </Button.ToolTip>
                 
                 <Image Source="Assets/Copy.png" Height="30"/>
             </Button>
-            <Button x:Name="button_Paste" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" Width="40" Height="40" Background="Transparent">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="BorderThickness" Value="0"/>
-                    </Style>
-                </Button.Style>
-
+            <Button x:Name="button_Paste" Grid.Column="7" Style="{DynamicResource ButtonPanelTool}">
+                
                 <Button.ToolTip>
                     <ToolTip>Вставить (Ctrl+V)</ToolTip>
                 </Button.ToolTip>
 
                 <Image Source="Assets/Paste.png" Height="30"/>
             </Button>
-            <Button x:Name="button_Cut" Grid.Column="8" HorizontalAlignment="Center" VerticalAlignment="Center" Width="40" Height="40" Background="Transparent">
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="BorderThickness" Value="0"/>
-                    </Style>
-                </Button.Style>
-
+            <Button x:Name="button_Cut" Grid.Column="8" Style="{DynamicResource ButtonPanelTool}">
+                
                 <Button.ToolTip>
                     <ToolTip>Вырезать (Ctrl+X)</ToolTip>
                 </Button.ToolTip>
@@ -185,6 +148,31 @@
                 <Image Source="Assets/Cut.png" Height="30"/>
             </Button>
 
+            <!--Остальное -->
+            <Button x:Name="button_Play" Grid.Column="9" Style="{DynamicResource ButtonPanelTool}">                
+                
+                <Button.ToolTip>
+                    <ToolTip>Запуск</ToolTip>
+                </Button.ToolTip>
+
+                <Image Source="Assets/Play.png" Height="30"/>
+            </Button>
+            <Button x:Name="button_Help" Grid.Column="10" Style="{DynamicResource ButtonPanelTool}">
+
+                <Button.ToolTip>
+                    <ToolTip>Запуск</ToolTip>
+                </Button.ToolTip>
+
+                <Image Source="Assets/Help.png" Height="30"/>
+            </Button>
+            <Button x:Name="button_Info" Grid.Column="11" Style="{DynamicResource ButtonPanelTool}">
+
+                <Button.ToolTip>
+                    <ToolTip>Запуск</ToolTip>
+                </Button.ToolTip>
+
+                <Image Source="Assets/Info.png" Height="30"/>
+            </Button>
         </Grid>
         
 
