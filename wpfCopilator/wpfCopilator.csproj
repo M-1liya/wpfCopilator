@@ -13,12 +13,16 @@
     <None Remove="Assets\Cut.png" />
     <None Remove="Assets\Help.png" />
     <None Remove="Assets\Info.png" />
+    <None Remove="Assets\OIG3.ico" />
+    <None Remove="Assets\OIG3.png" />
     <None Remove="Assets\Open.png" />
+    <None Remove="Assets\PanelTool.png" />
     <None Remove="Assets\Paste.png" />
     <None Remove="Assets\Play.png" />
     <None Remove="Assets\Return.png" />
     <None Remove="Assets\Save.png" />
     <None Remove="Create.png" />
+    <None Remove="ManualPages\ManualAssets\PanelTool.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,11 +32,14 @@
     <Resource Include="Assets\Cut.png" />
     <Resource Include="Assets\Help.png" />
     <Resource Include="Assets\Info.png" />
+    <Resource Include="Assets\OIG3.ico" />
+    <Resource Include="Assets\OIG3.png" />
     <Resource Include="Assets\Open.png" />
     <Resource Include="Assets\Paste.png" />
     <Resource Include="Assets\Play.png" />
     <Resource Include="Assets\Return.png" />
     <Resource Include="Assets\Save.png" />
+    <Resource Include="ManualPages\ManualAssets\PanelTool.png" />
   </ItemGroup>
 
 </Project>

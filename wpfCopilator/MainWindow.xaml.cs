@@ -24,5 +24,18 @@ namespace wpfCopilator
         {
             InitializeComponent();
         }
+
+        public void Click_HelpButton(object sender, RoutedEventArgs e)
+        {
+            Manual manual = new Manual();
+            manual.Show();
+        }
+
+        public void Click_AboutProgram(object sender, RoutedEventArgs e)
+        {
+            AboutProgram aboutProgram = new AboutProgram();
+            aboutProgram.Show();
+            
+        }
     }
 }

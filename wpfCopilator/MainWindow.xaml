@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:wpfCopilator"
         mc:Ignorable="d"
         Title="Компилятор" Height="450" Width="800" Background="#F2F2F2"
-        MinWidth="440" MinHeight="250">
+        MinWidth="440" MinHeight="250"
+        Icon="Assets/OIG3.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -59,8 +60,8 @@
             <MenuItem Header="Пуск"/>
 
             <MenuItem Header="Справка">
-                <MenuItem Header="Вызов справки"/>
-                <MenuItem Header="О программе"/>
+                <MenuItem Header="Вызов справки" Click="Click_HelpButton"/>
+                <MenuItem Header="О программе" Click="Click_AboutProgram"/>
             </MenuItem>
         </Menu>
         
@@ -157,18 +158,18 @@
 
                 <Image Source="Assets/Play.png" Height="30"/>
             </Button>
-            <Button x:Name="button_Help" Grid.Column="10" Style="{DynamicResource ButtonPanelTool}">
+            <Button x:Name="button_Help" Grid.Column="10" Style="{DynamicResource ButtonPanelTool}" Click="Click_HelpButton">
 
                 <Button.ToolTip>
-                    <ToolTip>Запуск</ToolTip>
+                    <ToolTip>Помощь</ToolTip>
                 </Button.ToolTip>
 
                 <Image Source="Assets/Help.png" Height="30"/>
             </Button>
-            <Button x:Name="button_Info" Grid.Column="11" Style="{DynamicResource ButtonPanelTool}">
+            <Button x:Name="button_Info" Grid.Column="11" Style="{DynamicResource ButtonPanelTool}" Click="Click_AboutProgram">
 
                 <Button.ToolTip>
-                    <ToolTip>Запуск</ToolTip>
+                    <ToolTip>О программе</ToolTip>
                 </Button.ToolTip>
 
                 <Image Source="Assets/Info.png" Height="30"/>
