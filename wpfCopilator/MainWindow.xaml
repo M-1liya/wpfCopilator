@@ -6,11 +6,23 @@
         xmlns:local="clr-namespace:wpfCopilator"
         mc:Ignorable="d"
         Title="Компилятор" Height="450" Width="800" Background="#F2F2F2"
-        MinWidth="440" MinHeight="250">
+        MinWidth="440" MinHeight="250" Closed="Window_Closed" Closing="Window_Closing">
     
     <Window.CommandBindings>
         <CommandBinding Command="New" 
                         Executed="CommandNew_Executed"
+                        CanExecute="CommandNew_CanExecute">
+        </CommandBinding>
+        <CommandBinding Command="Open" 
+                        Executed="CommandOpen_Executed"
+                        CanExecute="CommandNew_CanExecute">
+        </CommandBinding>
+        <CommandBinding Command="SaveAs" 
+                        Executed="CommandSaveAs_Executed"
+                        CanExecute="CommandNew_CanExecute">
+        </CommandBinding>
+        <CommandBinding Command="Save" 
+                        Executed="CommandSave_Executed"
                         CanExecute="CommandNew_CanExecute">
         </CommandBinding>
     </Window.CommandBindings>
@@ -36,9 +48,9 @@
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
             <MenuItem Header="Файл">
                 <MenuItem Header="Создать" Command="New"/>
-                <MenuItem Header="Открыть"/>
-                <MenuItem Header="Сохранить"/>
-                <MenuItem Header="Сохранить как"/>
+                <MenuItem Header="Открыть" Command="Open" />
+                <MenuItem Header="Сохранить" Command="Save"/>
+                <MenuItem Header="Сохранить как" Command="SaveAs" />
                 <MenuItem Header="Выход"/>
             </MenuItem>
 
@@ -100,14 +112,14 @@
                 </Button.ToolTip>
                 <Image Source="Assets/Create.png"/>
             </Button>
-            <Button x:Name="button_Open" Grid.Column="1" Style="{DynamicResource ButtonPanelTool}">
+                <Button x:Name="button_Open" Command="Open" Grid.Column="1" Style="{DynamicResource ButtonPanelTool}">
                 
                 <Button.ToolTip>
                     <ToolTip>Открыть (Ctrl+O)</ToolTip>
                 </Button.ToolTip>
                 <Image Source="Assets/Open.png" Width="38" Height="30"/>
             </Button>
-            <Button x:Name="button_Save" Grid.Column="2" Style="{DynamicResource ButtonPanelTool}">
+                <Button x:Name="button_Save" Command="Save" Grid.Column="2" Style="{DynamicResource ButtonPanelTool}">
                 
                 <Button.ToolTip>
                     <ToolTip>Сохранить (Ctrl+S)</ToolTip>

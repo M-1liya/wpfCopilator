@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,6 +30,12 @@ namespace wpfCopilator
         private void CreateButton_Click(object sender, RoutedEventArgs e)
         {
             FileName = myTextBox.Text;
+            File.Create(Environment.CurrentDirectory + "//" + "tempFilesDirectory//" + FileName + ".txt");
+            this.Close();
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
             this.Close();
         }
     }

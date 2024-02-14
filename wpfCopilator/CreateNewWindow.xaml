@@ -19,6 +19,6 @@
         <TextBlock Grid.ColumnSpan= "2" Text ="Имя файла" VerticalAlignment ="Center" HorizontalAlignment="Center"></TextBlock>
         <TextBox x:Name="myTextBox" Grid.Row="1" Grid.ColumnSpan= "2" VerticalAlignment ="Center" Margin="10"></TextBox>
         <Button  Name="CreateButton" Grid.Row="2" Grid.Column="0" Margin="40,8,40,10" Content="Создать" Click="CreateButton_Click"/>
-        <Button  Name="CancelButton" Grid.Row="2" Grid.Column="1" Margin="40,8,40,10" Content="Отмена"/>
+        <Button  Name="CancelButton" Grid.Row="2" Grid.Column="1" Margin="40,8,40,10" Content="Отмена" Click="CancelButton_Click"/>
     </Grid>
 </Window>
