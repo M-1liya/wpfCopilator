@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Ribbon;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -23,6 +24,30 @@ namespace wpfCopilator
         public MainWindow()
         {
             InitializeComponent();
+
+        }
+
+        private void CommandNew_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            CreateNewWindow window = new CreateNewWindow();
+            window.Owner = this;
+            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            window.ShowDialog();
+            mainTabControl.Items.Add(new TabItem
+            {
+                Header = window.FileName,
+                Content = new TextBox
+                {
+                    Name = "txt",
+                    AcceptsReturn = true,
+                    AcceptsTab = true,
+                    VerticalScrollBarVisibility = ScrollBarVisibility.Auto
+                }
+            }) ;
+        }
+        private void CommandNew_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
         }
     }
 }
