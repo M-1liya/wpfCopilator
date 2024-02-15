@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:wpfCopilator"
         mc:Ignorable="d"
         Title="Компилятор" Height="450" Width="800" Background="#F2F2F2"
-        MinWidth="440" MinHeight="250" Closed="Window_Closed" Closing="Window_Closing">
+        MinWidth="440" MinHeight="250" Closed="Window_Closed" Closing="Window_Closing"
+        Icon="Assets/OIG3.ico">
     
     <Window.CommandBindings>
         <CommandBinding Command="New" 
@@ -25,6 +26,7 @@
                         Executed="CommandSave_Executed"
                         CanExecute="CommandNew_CanExecute">
         </CommandBinding>
+
     </Window.CommandBindings>
     
     
@@ -53,18 +55,15 @@
                 <MenuItem Header="Сохранить как" Command="SaveAs" />
                 <MenuItem Name ="MenuItemExit" Header="Выход" Click="MenuItemExit_Click"/>
             </MenuItem>
-
-
             <MenuItem Header="Правка">
                 <MenuItem Header="Отменить"/>
                 <MenuItem Header="Повторить"/>
                 <MenuItem Header="Вырезать" Command="Cut"/>
                 <MenuItem Header="Копировать" Command="Copy"/>
                 <MenuItem Header="Вставить" Command="Paste"/>
-                <MenuItem Header="Удалить" Command="Delete"/>
+                <MenuItem Header="Удалить" Click="CommandDelete"/>
                 <MenuItem Header="Выделить все" Command="SelectAll"/>
             </MenuItem>
-
             <MenuItem Header="Текст">
                 <MenuItem Header="Постановка задачи"/>
                 <MenuItem Header="Грамматика"/>

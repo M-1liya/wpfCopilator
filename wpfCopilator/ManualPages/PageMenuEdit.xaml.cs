@@ -23,6 +23,9 @@ namespace wpfCopilator.ManualPages
         public PageMenuEdit()
         {
             InitializeComponent();
+
+            ContentLabel.Text = @"
+В пункте меню ""Правка представлены стандартные инструменты для работы с текстом.""";
         }
     }
 }

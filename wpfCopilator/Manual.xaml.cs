@@ -21,6 +21,12 @@ namespace wpfCopilator
     public partial class Manual : Window
     {
         private Button? _previousButton = null;
+        private List<Page> _pages = new List<Page>()
+        {
+            new PageMenuEdit(),
+            new PagePanelTool(),
+            new PageMenuFile()
+        };
         public Manual()
         {
             InitializeComponent();
@@ -36,7 +42,7 @@ namespace wpfCopilator
             tmpButton.IsEnabled = false;
             _previousButton = tmpButton;
 
-            ContentFrame.Content = new PagePanelTool();
+            _navigateFrame<PagePanelTool>();
         }
 
         public void Click_PageMenuFile(object sender, RoutedEventArgs e)
@@ -47,6 +53,8 @@ namespace wpfCopilator
             Button tmpButton = sender as Button;
             tmpButton.IsEnabled = false;
             _previousButton = tmpButton;
+
+            _navigateFrame<PageMenuFile>();
         }
 
         public void Click_PageMenuEdit(object sender, RoutedEventArgs e)
@@ -57,6 +65,20 @@ namespace wpfCopilator
             Button tmpButton = sender as Button;
             tmpButton.IsEnabled = false;
             _previousButton = tmpButton;
+
+            _navigateFrame<PageMenuEdit>();
+        }
+
+        private void _navigateFrame<T>()
+        {
+            foreach(Page page in _pages)
+            {
+                if(page is T)
+                {
+                    ContentFrame.Navigate(page);
+                    break;
+                }
+            }
         }
     }
 }

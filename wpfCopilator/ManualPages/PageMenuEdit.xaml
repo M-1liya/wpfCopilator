@@ -8,22 +8,28 @@
       d:DesignHeight="450" d:DesignWidth="800" Background="#F2F2F2"
       Title="PageMenuEdit">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="16"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+    <ScrollViewer>
 
-        <AccessText Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2" TextWrapping="WrapWithOverflow" FontSize="14">
-            Content Edit Content Content Content Content Content Content Content Content Content
-        </AccessText>
-    </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="16"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Image Source="ManualAssets\MenuEdit.png" Grid.Column="1" Grid.ColumnSpan="3" MaxWidth="200"/>
+
+
+            <AccessText x:Name="ContentLabel" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2" TextWrapping="WrapWithOverflow" FontSize="14">
+            </AccessText>
+
+        </Grid>
+    </ScrollViewer>
 </Page>

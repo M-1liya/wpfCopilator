@@ -8,26 +8,29 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PanelTool">
 
+    <ScrollViewer>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="16"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="16"/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="16"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+            <Image Source="ManualAssets/PanelTool.png" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" MaxWidth="750"/>
 
-        <Image Source="ManualAssets/PanelTool.png" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" MaxWidth="750"/>
+            <AccessText x:Name="ContentLabel" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="2" FontSize="14" TextWrapping="WrapWithOverflow">
 
-        <AccessText x:Name="ContentLabel" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="2" FontSize="14" TextWrapping="WrapWithOverflow">
+            </AccessText>
 
-        </AccessText>
+        </Grid>
 
-    </Grid>
+    </ScrollViewer>
+
 </Page>

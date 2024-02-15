@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpfCopilator"
         mc:Ignorable="d"
-        Title="CreateNewWindow" Height="150" Width="300" Background="Honeydew">
+        Title="Создание нового файла" Height="150" Width="300" Background="#F2F2F2"
+        Icon="Assets/OIG3.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>

@@ -103,6 +103,19 @@ namespace wpfCopilator
             writer.WriteLine(textBox.Text);
             writer.Close();
         }
+        private void CommandDelete(object sender, RoutedEventArgs e)
+        {
+            if (mainTabControl.Items.Count == 0) return;
+            TabItem tabItem = (TabItem)mainTabControl.SelectedItem;
+
+            if ( tabItem.Content == null || !(tabItem.Content is TextBox) ) return;
+            TextBox textbox = (TextBox)tabItem.Content;
+
+            if(!string.IsNullOrEmpty(textbox.SelectedText))
+            {
+                textbox.Text = textbox.Text.Remove(textbox.SelectionStart, textbox.SelectionLength);
+            }
+        }
 
         private void Window_Closed(object sender, EventArgs e)
         {
@@ -137,14 +150,16 @@ namespace wpfCopilator
         {
             Application.Current.Shutdown();
         }
-        public void Click_HelpButton(object sender, RoutedEventArgs e)
+        private void Click_HelpButton(object sender, RoutedEventArgs e)
         {
             Manual manual = new Manual();
             manual.Show();
         }
-        public void Click_AboutProgram(object sender, RoutedEventArgs e)
+        private void Click_AboutProgram(object sender, RoutedEventArgs e)
         {
             AboutProgram aboutProgram = new AboutProgram();
+
+            aboutProgram.Owner = this;
             aboutProgram.Show();
             
         }

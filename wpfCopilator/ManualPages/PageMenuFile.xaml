@@ -8,6 +8,9 @@
       d:DesignHeight="450" d:DesignWidth="800" Background="#F2F2F2"
       Title="PageMenuFile">
 
+    <ScrollViewer>
+        
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="16"/>
@@ -17,13 +20,15 @@
             <ColumnDefinition Width="16"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <AccessText Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2" TextWrapping="WrapWithOverflow" FontSize="14">
-            Content Content Content Content Content Content Content Content Content Content 
+        <Image Source="ManualAssets/CreateNewFile.png" Grid.Column="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" MaxWidth="350"/>
+        <AccessText x:Name="ContentLabel" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2" TextWrapping="WrapWithOverflow" FontSize="14">
+            
         </AccessText>
     </Grid>
+        </ScrollViewer>
 </Page>

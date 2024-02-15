@@ -22,6 +22,8 @@
     <None Remove="Assets\Return.png" />
     <None Remove="Assets\Save.png" />
     <None Remove="Create.png" />
+    <None Remove="ManualPages\ManualAssets\CreateNewFile.png" />
+    <None Remove="ManualPages\ManualAssets\MenuEdit.png" />
     <None Remove="ManualPages\ManualAssets\PanelTool.png" />
   </ItemGroup>
 
@@ -39,6 +41,8 @@
     <Resource Include="Assets\Play.png" />
     <Resource Include="Assets\Return.png" />
     <Resource Include="Assets\Save.png" />
+    <Resource Include="ManualPages\ManualAssets\CreateNewFile.png" />
+    <Resource Include="ManualPages\ManualAssets\MenuEdit.png" />
     <Resource Include="ManualPages\ManualAssets\PanelTool.png" />
   </ItemGroup>
 

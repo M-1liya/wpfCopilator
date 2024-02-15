@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpfCopilator"
         mc:Ignorable="d"
-        Title="О программе" Height="250" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="#F2F2F2"
-        Icon="Assets/OIG3.ico"
+        Title="О программе" Height="250" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Background="#F2F2F2"
+        Icon="Assets/OIG3.ico" 
         >
     <Grid>
         <Grid.RowDefinitions>

@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpfCopilator"
         mc:Ignorable="d" Background="#F2F2F2"
-        Title="Справочник" Height="450" Width="800">
+        Title="Справочник" Height="450" Width="800"
+        Icon="Assets/OIG3.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -29,7 +30,7 @@
         </ScrollViewer>
 
         <!--Контент-->
-        <Frame x:Name="ContentFrame" Grid.Column="1" Grid.Row="0"/>
+        <Frame x:Name="ContentFrame" Grid.Column="1" Grid.Row="0" NavigationUIVisibility="Hidden"/>
 
         <GridSplitter Grid.Column="0" Grid.Row="0" Width="5" Background="#E0E0E0"/>
     </Grid>
