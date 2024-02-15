@@ -51,7 +51,7 @@
                 <MenuItem Header="Открыть" Command="Open" />
                 <MenuItem Header="Сохранить" Command="Save"/>
                 <MenuItem Header="Сохранить как" Command="SaveAs" />
-                <MenuItem Header="Выход"/>
+                <MenuItem Name ="MenuItemExit" Header="Выход" Click="MenuItemExit_Click"/>
             </MenuItem>
 
 
@@ -163,7 +163,7 @@
             <Button x:Name="button_Cut" Command="Cut" Grid.Column="8" Style="{DynamicResource ButtonPanelTool}">
                 
                 <Button.ToolTip>
-                    <ToolTip>Вырезать (Ctrl+X)</ToolTip>
+                    <ToolTip >Вырезать (Ctrl+X)</ToolTip>
                 </Button.ToolTip>
 
                 <Image Source="Assets/Cut.png" Height="30"/>

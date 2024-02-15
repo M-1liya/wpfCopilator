@@ -125,13 +125,18 @@ namespace wpfCopilator
                 MessageBoxResult messageResult = MessageBox.Show("У вас " + Convert.ToString(i) + "несохраненных файлов, вы хотите продолжить?", "Предупреждение", MessageBoxButton.YesNo);
                 if (messageResult == MessageBoxResult.Yes)
                 {
-                    e.Cancel = true;
+                    e.Cancel = false;
                 }
                 else if (messageResult == MessageBoxResult.No)
                 {
-                    e.Cancel = false;
+                    e.Cancel = true;
                 }
             }
+        }
+
+        private void MenuItemExit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }
