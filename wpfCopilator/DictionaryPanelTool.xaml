@@ -11,5 +11,38 @@
         <Setter Property="Height" Value="40"/>
 
     </Style>
-    
+    <Style x:Key="TabItemStyle" TargetType="TabItem">
+        <Setter Property ="Header">
+            <Setter.Value>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,14,0">Output</TextBlock>
+                    <Button Grid.Column="1" Name="button_close">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Path Data="M0,0 L8,8 M8,0 L0,8" StrokeThickness="3" VerticalAlignment="Center" Margin="5,4,0,2">
+                                    <Path.Style>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="False">
+                                                    <Setter Property="Stroke" Value="LightGray" />
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Stroke" Value="Black" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Path.Style>
+                                </Path>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </Grid>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
