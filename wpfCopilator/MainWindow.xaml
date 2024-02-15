@@ -6,8 +6,7 @@
         xmlns:local="clr-namespace:wpfCopilator"
         mc:Ignorable="d"
         Title="Компилятор" Height="450" Width="800" Background="#F2F2F2"
-        MinWidth="440" MinHeight="250"
-        Icon="Assets/OIG3.ico">
+        MinWidth="440" MinHeight="250">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -28,22 +27,22 @@
 
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
             <MenuItem Header="Файл">
-                <MenuItem Header="Создать"/>
-                <MenuItem Header="Открыть"/>
-                <MenuItem Header="Сохранить"/>
-                <MenuItem Header="Сохранить как"/>
-                <MenuItem Header="Выход"/>
+                <MenuItem Header="Создать" Command="New"/>
+                <MenuItem Header="Открыть" Command="Open" />
+                <MenuItem Header="Сохранить" Command="Save"/>
+                <MenuItem Header="Сохранить как" Command="SaveAs" />
+                <MenuItem Name ="MenuItemExit" Header="Выход" Click="MenuItemExit_Click"/>
             </MenuItem>
 
 
             <MenuItem Header="Правка">
                 <MenuItem Header="Отменить"/>
                 <MenuItem Header="Повторить"/>
-                <MenuItem Header="Вырезать"/>
-                <MenuItem Header="Копировать"/>
-                <MenuItem Header="Вставить"/>
-                <MenuItem Header="Удалить"/>
-                <MenuItem Header="Выделить все"/>
+                <MenuItem Header="Вырезать" Command="Cut"/>
+                <MenuItem Header="Копировать" Command="Copy"/>
+                <MenuItem Header="Вставить" Command="Paste"/>
+                <MenuItem Header="Удалить" Command="Delete"/>
+                <MenuItem Header="Выделить все" Command="SelectAll"/>
             </MenuItem>
 
             <MenuItem Header="Текст">
@@ -67,6 +66,7 @@
         
         
         <!--Панель инструментов -->
+        <ToolBar Grid.ColumnSpan="5" Margin="0,22,0,0">
         <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5" HorizontalAlignment="Left">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -85,21 +85,21 @@
             </Grid.ColumnDefinitions>
 
             <!-- Кнопки меню "Файл"-->
-            <Button x:Name="button_Create" Grid.Column="0" Style="{DynamicResource ButtonPanelTool}">
+            <Button x:Name="button_Create" Grid.Column="0" Command="New" Style="{DynamicResource ButtonPanelTool}">
                 
                 <Button.ToolTip>
                     <ToolTip>Создать (Ctrl+N)</ToolTip>
                 </Button.ToolTip>
                 <Image Source="Assets/Create.png"/>
             </Button>
-            <Button x:Name="button_Open" Grid.Column="1" Style="{DynamicResource ButtonPanelTool}">
+                <Button x:Name="button_Open" Command="Open" Grid.Column="1" Style="{DynamicResource ButtonPanelTool}">
                 
                 <Button.ToolTip>
                     <ToolTip>Открыть (Ctrl+O)</ToolTip>
                 </Button.ToolTip>
                 <Image Source="Assets/Open.png" Width="38" Height="30"/>
             </Button>
-            <Button x:Name="button_Save" Grid.Column="2" Style="{DynamicResource ButtonPanelTool}">
+                <Button x:Name="button_Save" Command="Save" Grid.Column="2" Style="{DynamicResource ButtonPanelTool}">
                 
                 <Button.ToolTip>
                     <ToolTip>Сохранить (Ctrl+S)</ToolTip>
@@ -124,7 +124,7 @@
                 
                 <Image Source="Assets/Return.png" Height="30"/>
             </Button>
-            <Button x:Name="button_Copy" Grid.Column="6" Style="{DynamicResource ButtonPanelTool}">
+            <Button x:Name="button_Copy" Command="Copy" Grid.Column="6" Style="{DynamicResource ButtonPanelTool}">
                 
                 <Button.ToolTip>
                     <ToolTip>Копировать (Ctrl+C)</ToolTip>
@@ -132,7 +132,7 @@
                 
                 <Image Source="Assets/Copy.png" Height="30"/>
             </Button>
-            <Button x:Name="button_Paste" Grid.Column="7" Style="{DynamicResource ButtonPanelTool}">
+                <Button x:Name="button_Paste" Command="Paste" Grid.Column="7" Style="{DynamicResource ButtonPanelTool}">
                 
                 <Button.ToolTip>
                     <ToolTip>Вставить (Ctrl+V)</ToolTip>
@@ -140,10 +140,10 @@
 
                 <Image Source="Assets/Paste.png" Height="30"/>
             </Button>
-            <Button x:Name="button_Cut" Grid.Column="8" Style="{DynamicResource ButtonPanelTool}">
+            <Button x:Name="button_Cut" Command="Cut" Grid.Column="8" Style="{DynamicResource ButtonPanelTool}">
                 
                 <Button.ToolTip>
-                    <ToolTip>Вырезать (Ctrl+X)</ToolTip>
+                    <ToolTip >Вырезать (Ctrl+X)</ToolTip>
                 </Button.ToolTip>
 
                 <Image Source="Assets/Cut.png" Height="30"/>
@@ -175,9 +175,9 @@
                 <Image Source="Assets/Info.png" Height="30"/>
             </Button>
         </Grid>
-        
+        </ToolBar>
 
-        <TabControl Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4">
+        <TabControl x:Name="mainTabControl" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4">
             <TabItem Header="TabItem">
                 <Grid Background="White"/>
             </TabItem>
