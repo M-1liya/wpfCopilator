@@ -122,7 +122,7 @@ namespace wpfCopilator
             }
             if(i!= 0)
             {
-                MessageBoxResult messageResult = MessageBox.Show("У вас " + Convert.ToString(i) + "несохраненных файлов, вы хотите продолжить?", "Предупреждение", MessageBoxButton.YesNo);
+                MessageBoxResult messageResult = MessageBox.Show("У вас " + Convert.ToString(i) + " несохраненных файлов, вы хотите их сохранить?", "Предупреждение", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
                 if (messageResult == MessageBoxResult.Yes)
                 {
                     e.Cancel = false;
@@ -133,18 +133,15 @@ namespace wpfCopilator
                 }
             }
         }
-
         private void MenuItemExit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
-
         public void Click_HelpButton(object sender, RoutedEventArgs e)
         {
             Manual manual = new Manual();
             manual.Show();
         }
-
         public void Click_AboutProgram(object sender, RoutedEventArgs e)
         {
             AboutProgram aboutProgram = new AboutProgram();

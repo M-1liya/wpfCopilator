@@ -6,11 +6,32 @@
         xmlns:local="clr-namespace:wpfCopilator"
         mc:Ignorable="d"
         Title="Компилятор" Height="450" Width="800" Background="#F2F2F2"
-        MinWidth="440" MinHeight="250">
+        MinWidth="440" MinHeight="250" Closed="Window_Closed" Closing="Window_Closing">
+    
+    <Window.CommandBindings>
+        <CommandBinding Command="New" 
+                        Executed="CommandNew_Executed"
+                        CanExecute="CommandNew_CanExecute">
+        </CommandBinding>
+        <CommandBinding Command="Open" 
+                        Executed="CommandOpen_Executed"
+                        CanExecute="CommandNew_CanExecute">
+        </CommandBinding>
+        <CommandBinding Command="SaveAs" 
+                        Executed="CommandSaveAs_Executed"
+                        CanExecute="CommandNew_CanExecute">
+        </CommandBinding>
+        <CommandBinding Command="Save" 
+                        Executed="CommandSave_Executed"
+                        CanExecute="CommandNew_CanExecute">
+        </CommandBinding>
+    </Window.CommandBindings>
+    
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition />
             <RowDefinition />
             <RowDefinition Height="24"/>
@@ -22,8 +43,7 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
             <ColumnDefinition Width="16"/>
-        </Grid.ColumnDefinitions>
-        
+        </Grid.ColumnDefinitions>        
 
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
             <MenuItem Header="Файл">
@@ -66,7 +86,7 @@
         
         
         <!--Панель инструментов -->
-        <ToolBar Grid.ColumnSpan="5" Margin="0,22,0,0">
+        <ToolBar Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5" HorizontalAlignment="Left" Background="Transparent" >
         <Grid Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="5" HorizontalAlignment="Left">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -132,7 +152,7 @@
                 
                 <Image Source="Assets/Copy.png" Height="30"/>
             </Button>
-                <Button x:Name="button_Paste" Command="Paste" Grid.Column="7" Style="{DynamicResource ButtonPanelTool}">
+            <Button x:Name="button_Paste" Command="Paste" Grid.Column="7" Style="{DynamicResource ButtonPanelTool}">
                 
                 <Button.ToolTip>
                     <ToolTip>Вставить (Ctrl+V)</ToolTip>
@@ -177,14 +197,8 @@
         </Grid>
         </ToolBar>
 
-        <TabControl x:Name="mainTabControl" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4">
-            <TabItem Header="TabItem">
-                <Grid Background="White"/>
-            </TabItem>
-            <TabItem Header="TabItem">
-                <Grid Background="White"/>
-            </TabItem>
-        </TabControl>
+        <TabControl x:Name="mainTabControl" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"/>
+
         <TabControl Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4">
             <TabItem Header="TabItem">
                 <Grid Background="White"/>

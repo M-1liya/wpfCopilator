@@ -1,0 +1,29 @@
+﻿<Page x:Class="wpfCopilator.ManualPages.PageMenuEdit"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:wpfCopilator.ManualPages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800" Background="#F2F2F2"
+      Title="PageMenuEdit">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="16"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="16"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <AccessText Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3" Grid.RowSpan="2" TextWrapping="WrapWithOverflow" FontSize="14">
+            Content Edit Content Content Content Content Content Content Content Content Content
+        </AccessText>
+    </Grid>
+</Page>

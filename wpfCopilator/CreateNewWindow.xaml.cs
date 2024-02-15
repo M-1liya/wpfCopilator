@@ -29,6 +29,10 @@ namespace wpfCopilator
 
         private void CreateButton_Click(object sender, RoutedEventArgs e)
         {
+            if(!Directory.Exists("tempFilesDirectory"))
+            {
+                Directory.CreateDirectory("tempFilesDirectory");
+            }
             FileName = myTextBox.Text;
             File.Create(Environment.CurrentDirectory + "//" + "tempFilesDirectory//" + FileName + ".txt");
             this.Close();
