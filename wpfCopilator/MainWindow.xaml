@@ -201,12 +201,12 @@
             </Grid>
         </ToolBar>
 
-        <TabControl x:Name="mainTabControl" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" AllowDrop="True"/>
+        <TabControl x:Name="mainTabControl" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" AllowDrop="True" PreviewDragEnter="Tmp_PreviewDragEnter" PreviewDragLeave="Tmp_PreviewDragEnter" PreviewDrop="TextBox_Drop"/>
 
         <TabControl Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Name ="testtabControl">
-            <TabItem MouseDoubleClick="TabItem_MouseDoubleClick" Tag="1" Style="{DynamicResource TabItemStyle}"/>
+            <!--<TabItem MouseDoubleClick="TabItem_MouseDoubleClick" Tag="1" Style="{DynamicResource TabItemStyle}"/>-->
             <TabItem Header="Лог">
-                <ListBox Grid.Row="3" Name="lstHistory" Margin="5" DisplayMemberPath="CommandName"></ListBox>
+                <ListBox Grid.Row="3" Name="lstHistory" Margin="5" DisplayMemberPath="CommandName" FontSize ="{Binding ElementName=sliderScale,Path=Value}"></ListBox>
             </TabItem>
         </TabControl>
 

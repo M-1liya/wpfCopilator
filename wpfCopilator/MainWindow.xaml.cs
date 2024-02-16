@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
@@ -77,9 +78,9 @@ namespace wpfCopilator
             binding.ElementName = "sliderScale";
             binding.Path = new PropertyPath("Value");
             TextBox tmp = item.Content as TextBox;
-            tmp.PreviewDrop += TextBox_Drop;
-            tmp.PreviewDragEnter += Tmp_PreviewDragEnter;
-            tmp.PreviewDragOver += Tmp_PreviewDragEnter;
+            //tmp.PreviewDrop += TextBox_Drop;
+            //tmp.PreviewDragEnter += Tmp_PreviewDragEnter;
+            //tmp.PreviewDragOver += Tmp_PreviewDragEnter;
             tmp.SetBinding(TextBox.FontSizeProperty, binding);
         }
 
