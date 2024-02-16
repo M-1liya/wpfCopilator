@@ -41,7 +41,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition />
             <RowDefinition />
-            <RowDefinition Height="24"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="16"/>
@@ -212,15 +212,20 @@
 
 
         <GridSplitter Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Height="5"/>
-        <ComboBox  Name="comboBoxScale"  Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Width="49" Height="17" Margin="0,173,0,0" Grid.RowSpan="2" SelectionChanged="comboBoxScale_SelectionChanged">
-            <ComboBoxItem Tag="20">20%</ComboBoxItem>
-            <ComboBoxItem Tag="50">50%</ComboBoxItem>
-            <ComboBoxItem Tag="70">70%</ComboBoxItem>
-            <ComboBoxItem Tag="100">100%</ComboBoxItem>
-            <ComboBoxItem Tag="150">150%</ComboBoxItem>
-            <ComboBoxItem Tag="200">200%</ComboBoxItem>
-            <ComboBoxItem Tag="400">400%</ComboBoxItem>
-        </ComboBox>
-        <Slider Name="sliderScale" Value ="20"  Minimum ="20" Maximum="400" IsSnapToTickEnabled="True" Grid.Column="4" HorizontalAlignment="Left" Margin="72,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="120" Visibility="Collapsed"/>
+
+        <StatusBar Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="5">
+            <Slider Name="sliderScale" Value ="20"  Minimum ="1" Maximum="400" IsSnapToTickEnabled="True"  HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" Width="120" Visibility="Collapsed"/>
+            <ComboBox  Name="comboBoxScale" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Height="Auto" Grid.RowSpan="2" SelectionChanged="comboBoxScale_SelectionChanged" IsReadOnly="True" SelectedIndex="3">
+                <ComboBoxItem Tag="8">20%</ComboBoxItem>
+                <ComboBoxItem Tag="10">50%</ComboBoxItem>
+                <ComboBoxItem Tag="12">70%</ComboBoxItem>
+                <ComboBoxItem Tag="14">100%</ComboBoxItem>
+                <ComboBoxItem Tag="16">150%</ComboBoxItem>
+                <ComboBoxItem Tag="28">200%</ComboBoxItem>
+                <ComboBoxItem Tag="56">400%</ComboBoxItem>
+            </ComboBox>
+            <Label x:Name="lang"/>
+
+        </StatusBar>
     </Grid>
 </Window>

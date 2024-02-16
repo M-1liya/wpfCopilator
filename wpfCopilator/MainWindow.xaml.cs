@@ -45,6 +45,14 @@ namespace wpfCopilator
 
             this.AddHandler(CommandManager.PreviewExecutedEvent,
                new ExecutedRoutedEventHandler(PreviewCommandExecute));
+
+            lang.Content = InputLanguageManager.Current.CurrentInputLanguage.DisplayName;
+
+            //Смена языка ввода
+            System.Windows.Input.InputLanguageManager.Current.InputLanguageChanged += new InputLanguageEventHandler((sender, e) =>
+            {
+                lang.Content = e.NewLanguage.DisplayName;
+            });
         }
 
         private void OpenNewFile(string Header, string pathFile, string Text)
