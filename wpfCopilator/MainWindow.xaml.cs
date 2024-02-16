@@ -30,10 +30,7 @@ namespace wpfCopilator
         OpenFileDialog _openDialog = new OpenFileDialog();
         SaveFileDialog _saveDialog = new SaveFileDialog();
         private static RoutedUICommand applicationUndo;
-        public static RoutedUICommand ApplicationUndo
-        {
-            get { return applicationUndo; }
-        }
+        public static RoutedUICommand ApplicationUndo => applicationUndo;
         static MainWindow()
         {
             applicationUndo = new RoutedUICommand(
