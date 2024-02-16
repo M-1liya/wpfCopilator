@@ -148,7 +148,7 @@ namespace wpfCopilator
             }
             item.Tag = _saveDialog.FileName;
         }
-        private void CommandSave_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void CommandSave_Executed(object sender, ExecutedRoutedEventArgs? e)
         {
             TabItem item = mainTabControl.SelectedItem as TabItem;
             TextBox textBox = item.Content as TextBox;
@@ -251,6 +251,31 @@ namespace wpfCopilator
                 else if (messageResult == MessageBoxResult.No)
                 {
                     e.Cancel = true;
+                }
+                else if(messageResult == MessageBoxResult.Cancel) 
+                {
+                    e.Cancel = true;
+                }
+
+                switch(messageResult)
+                {
+                    case MessageBoxResult.Yes:
+                        CommandSave_Executed(sender, null);
+                        e.Cancel = false;
+                        break;
+
+                    case MessageBoxResult.No:
+                        e.Cancel = false;
+                        break;
+
+                    case MessageBoxResult.Cancel:
+                        e.Cancel = true;
+                        break;
+
+                    default:
+                        e.Cancel = true;
+                        break;
+
                 }
             }
         }
