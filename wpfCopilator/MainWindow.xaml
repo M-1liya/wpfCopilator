@@ -208,6 +208,16 @@
             <TabItem Header="Лог">
                 <ListBox Grid.Row="3" Name="lstHistory" Margin="5" DisplayMemberPath="CommandName" FontSize ="{Binding ElementName=sliderScale,Path=Value}"></ListBox>
             </TabItem>
+            <TabItem Header="Таблица">
+                <DataGrid AutoGenerateColumns="False" FontSize ="{Binding ElementName=sliderScale,Path=Value}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="300" Header="File Path"/>
+                        <DataGridTextColumn Header="Line"/>
+                        <DataGridTextColumn Header="Column"/>
+                        <DataGridTextColumn Width="*"  Header="Message"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
         </TabControl>
 
 
