@@ -44,12 +44,12 @@ namespace wpfCopilator
             this.AddHandler(CommandManager.PreviewExecutedEvent,
                new ExecutedRoutedEventHandler(PreviewCommandExecute));
 
-            lang.Content = InputLanguageManager.Current.CurrentInputLanguage.DisplayName;
+            lang.Content = "Язык ввода: " + InputLanguageManager.Current.CurrentInputLanguage.DisplayName;
 
             //Смена языка ввода
             System.Windows.Input.InputLanguageManager.Current.InputLanguageChanged += new InputLanguageEventHandler((sender, e) =>
             {
-                lang.Content = e.NewLanguage.DisplayName;
+                lang.Content = "Язык ввода: " + e.NewLanguage.DisplayName;
             });
         }
 
@@ -141,7 +141,7 @@ namespace wpfCopilator
                 reader.Close();
             }
         }
-        private void CommandSaveAs_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void CommandSaveAs_Executed(object sender, ExecutedRoutedEventArgs? e)
         {
             TabItem item = mainTabControl.SelectedItem as TabItem;
             TextBox textBox = item.Content as TextBox;
@@ -158,6 +158,13 @@ namespace wpfCopilator
         {
             TabItem item = mainTabControl.SelectedItem as TabItem;
             TextBox textBox = item.Content as TextBox;
+
+            if (item.Tag == String.Empty)
+            {
+                CommandSaveAs_Executed(sender, e);
+                if (item.Tag == String.Empty)
+                    return;
+            }
             StreamWriter writer = new StreamWriter(Convert.ToString(item.Tag));
             writer.WriteLine(textBox.Text);
             writer.Close();
@@ -184,7 +191,7 @@ namespace wpfCopilator
             if (window.FileName != null)
             {
                 string path = Environment.CurrentDirectory + "//" + "tempFilesDirectory//" + window.FileName + ".txt";
-                OpenNewFile(window.FileName, path, String.Empty);
+                OpenNewFile(window.FileName, String.Empty, String.Empty);
             }
         }
         #endregion
@@ -266,7 +273,7 @@ namespace wpfCopilator
                 switch(messageResult)
                 {
                     case MessageBoxResult.Yes:
-                        CommandSave_Executed(sender, null);
+                        CommandSaveAs_Executed(sender, null);
                         e.Cancel = false;
                         break;
 
