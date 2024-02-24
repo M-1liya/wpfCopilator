@@ -3,12 +3,43 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:wpfCopilator"
+        xmlns:local="clr-namespace:wpfCopilator" xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
         mc:Ignorable="d"
         Title="Компилятор" Height="450" Width="800" Background="#F2F2F2"
         MinWidth="440" MinHeight="250" Closed="Window_Closed" Closing="Window_Closing"
         Icon="Assets/OIG3.ico" AllowDrop="True">
 
+    <Window.Resources>
+        <ControlTemplate TargetType="TabItem" x:Key="CloseableTabItem">
+            <Border BorderBrush="#FF270A07" BorderThickness="1"
+                    Background="{TemplateBinding Background}" Height="Auto" Width="Auto" >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock VerticalAlignment="Center" Margin="{TemplateBinding Padding}" Text="{TemplateBinding Header}"></TextBlock>
+                    <Button Grid.Column="1" Name="buttonX" Click="buttonX_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Path Data="M0,0 L8,8 M8,0 L0,8" StrokeThickness="3" VerticalAlignment="Center" Margin="5,4,0,2">
+                                    <Path.Style>
+                                        <Style TargetType="{x:Type Path}">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="False">
+                                                    <Setter Property="Stroke" Value="#FF230000" />
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Stroke" Value="#FFE80808" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Path.Style>
+                                </Path>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <ContentControl Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </StackPanel>
+            </Border>
+        </ControlTemplate>
+    </Window.Resources>
     <Window.CommandBindings>
         <CommandBinding Command="New" 
                         Executed="CommandNew_Executed"
@@ -109,21 +140,21 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Кнопки меню "Файл"-->
-                <Button x:Name="button_Create" Grid.Column="0" Command="New" Style="{DynamicResource ButtonPanelTool}">
+                <Button x:Name="button_Create" Grid.Column="0" Command="New" Style="{StaticResource ButtonPanelTool}">
 
                     <Button.ToolTip>
                         <ToolTip>Создать (Ctrl+N)</ToolTip>
                     </Button.ToolTip>
                     <Image Source="Assets/Create.png"/>
                 </Button>
-                <Button x:Name="button_Open" Command="Open" Grid.Column="1" Style="{DynamicResource ButtonPanelTool}">
+                <Button x:Name="button_Open" Command="Open" Grid.Column="1" Style="{StaticResource ButtonPanelTool}">
 
                     <Button.ToolTip>
                         <ToolTip>Открыть (Ctrl+O)</ToolTip>
                     </Button.ToolTip>
                     <Image Source="Assets/Open.png" Width="38" Height="30"/>
                 </Button>
-                <Button x:Name="button_Save" Command="Save" Grid.Column="2" Style="{DynamicResource ButtonPanelTool}">
+                <Button x:Name="button_Save" Command="Save" Grid.Column="2" Style="{StaticResource ButtonPanelTool}">
 
                     <Button.ToolTip>
                         <ToolTip>Сохранить (Ctrl+S)</ToolTip>
@@ -132,7 +163,7 @@
                 </Button>
 
                 <!-- Кнопки меню "Правка"-->
-                <Button x:Name="button_Cancel" Command = "local:MainWindow.ApplicationUndo" Grid.Column="4" Style="{DynamicResource ButtonPanelTool}">
+                <Button x:Name="button_Cancel" Command = "local:MainWindow.ApplicationUndo" Grid.Column="4" Style="{StaticResource ButtonPanelTool}">
 
                     <Button.ToolTip>
                         <ToolTip>Отменить (Ctrl+Z)</ToolTip>
@@ -140,7 +171,7 @@
 
                     <Image Source="Assets/Cancel.png" Height="30"/>
                 </Button>
-                <Button x:Name="button_Return" Grid.Column="5" Style="{DynamicResource ButtonPanelTool}">
+                <Button x:Name="button_Return" Grid.Column="5" Style="{StaticResource ButtonPanelTool}">
 
                     <Button.ToolTip>
                         <ToolTip>Вернуть (Ctrl+Y)</ToolTip>
@@ -148,7 +179,7 @@
 
                     <Image Source="Assets/Return.png" Height="30"/>
                 </Button>
-                <Button x:Name="button_Copy" Command="Copy" Grid.Column="6" Style="{DynamicResource ButtonPanelTool}">
+                <Button x:Name="button_Copy" Command="Copy" Grid.Column="6" Style="{StaticResource ButtonPanelTool}">
 
                     <Button.ToolTip>
                         <ToolTip>Копировать (Ctrl+C)</ToolTip>
@@ -156,7 +187,7 @@
 
                     <Image Source="Assets/Copy.png" Height="30"/>
                 </Button>
-                <Button x:Name="button_Paste" Command="Paste" Grid.Column="7" Style="{DynamicResource ButtonPanelTool}">
+                <Button x:Name="button_Paste" Command="Paste" Grid.Column="7" Style="{StaticResource ButtonPanelTool}">
 
                     <Button.ToolTip>
                         <ToolTip>Вставить (Ctrl+V)</ToolTip>
@@ -164,7 +195,7 @@
 
                     <Image Source="Assets/Paste.png" Height="30"/>
                 </Button>
-                <Button x:Name="button_Cut" Command="Cut" Grid.Column="8" Style="{DynamicResource ButtonPanelTool}">
+                <Button x:Name="button_Cut" Command="Cut" Grid.Column="8" Style="{StaticResource ButtonPanelTool}">
 
                     <Button.ToolTip>
                         <ToolTip >Вырезать (Ctrl+X)</ToolTip>
@@ -174,7 +205,7 @@
                 </Button>
 
                 <!--Остальное -->
-                <Button x:Name="button_Play" Grid.Column="9" Style="{DynamicResource ButtonPanelTool}" Click="button_Play_Click">
+                <Button x:Name="button_Play" Grid.Column="9" Style="{StaticResource ButtonPanelTool}" Click="button_Play_Click">
 
                     <Button.ToolTip>
                         <ToolTip>Запуск</ToolTip>
@@ -182,7 +213,7 @@
 
                     <Image Source="Assets/Play.png" Height="30"/>
                 </Button>
-                <Button x:Name="button_Help" Grid.Column="10" Style="{DynamicResource ButtonPanelTool}" Click="Click_HelpButton">
+                <Button x:Name="button_Help" Grid.Column="10" Style="{StaticResource ButtonPanelTool}" Click="Click_HelpButton">
 
                     <Button.ToolTip>
                         <ToolTip>Помощь</ToolTip>
@@ -190,7 +221,7 @@
 
                     <Image Source="Assets/Help.png" Height="30"/>
                 </Button>
-                <Button x:Name="button_Info" Grid.Column="11" Style="{DynamicResource ButtonPanelTool}" Click="Click_AboutProgram">
+                <Button x:Name="button_Info" Grid.Column="11" Style="{StaticResource ButtonPanelTool}" Click="Click_AboutProgram">
 
                     <Button.ToolTip>
                         <ToolTip>О программе</ToolTip>
@@ -204,11 +235,18 @@
         <TabControl x:Name="mainTabControl" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" AllowDrop="True" PreviewDragEnter="Tmp_PreviewDragEnter" PreviewDragLeave="Tmp_PreviewDragEnter" PreviewDrop="TextBox_Drop"/>
 
         <TabControl Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Name ="testtabControl">
-            <!--<TabItem MouseDoubleClick="TabItem_MouseDoubleClick" Tag="1" Style="{DynamicResource TabItemStyle}"/>-->
+           <!-- <TabItem MouseDoubleClick="TabItem_MouseDoubleClick" Tag="1" Style="{DynamicResource TabItemStyle}"/>-->
             <TabItem Header="Лог">
                 <ListBox Grid.Row="3" Name="lstHistory" Margin="5" DisplayMemberPath="CommandName" FontSize ="{Binding ElementName=sliderScale,Path=Value}"></ListBox>
             </TabItem>
-            <TabItem Header="Таблица">
+            <TabItem Header="Тест">
+                <avalonedit:TextEditor
+                        Name="tE"
+                        FontFamily="Consolas"
+                        SyntaxHighlighting="C#"
+                        FontSize="10pt"/>
+            </TabItem>
+            <TabItem Header="Таблица" Template="{DynamicResource CloseableTabItem}" Background ="White">
                 <DataGrid AutoGenerateColumns="False" FontSize ="{Binding ElementName=sliderScale,Path=Value}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="300" Header="File Path"/>

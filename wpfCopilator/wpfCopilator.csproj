@@ -28,6 +28,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Assets\Cancel.png" />
     <Resource Include="Assets\Copy.png" />
     <Resource Include="Assets\Create.png" />

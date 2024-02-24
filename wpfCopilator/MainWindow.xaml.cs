@@ -16,6 +16,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using Microsoft.Win32;
 using static System.Net.Mime.MediaTypeNames;
 using Application = System.Windows.Application;
@@ -40,7 +43,6 @@ namespace wpfCopilator
         public MainWindow()
         {
             InitializeComponent();
-
             this.AddHandler(CommandManager.PreviewExecutedEvent,
                new ExecutedRoutedEventHandler(PreviewCommandExecute));
 
@@ -52,39 +54,38 @@ namespace wpfCopilator
                 lang.Content = "Язык ввода: " + e.NewLanguage.DisplayName;
             });
         }
-
         private void OpenNewFile(string Header, string pathFile, string Text)
-        {
+        { 
+
             mainTabControl.Items.Add(new TabItem
             {
+                Template = this.FindResource("CloseableTabItem") as ControlTemplate,
+                Padding = new Thickness(3),
+                Background = Brushes.White,
                 AllowDrop = true,
                 Tag = pathFile,
                 Header = Header,
-                Content = new TextBox
+                Content = new TextEditor
                 {
                     Name = "txt",
                     Text = Text,
                     AllowDrop = true,
-                    AcceptsReturn = true,
-                    AcceptsTab = true,
-                    VerticalScrollBarVisibility = ScrollBarVisibility.Auto
+                    VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+                    FontFamily = new FontFamily("Consolas"),
+                    ShowLineNumbers = true,
+                    SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("C#")
                 }
-            }); ;
-
+            }) ; ;
             TabItem item = mainTabControl.Items[mainTabControl.Items.Count - 1] as TabItem;
             item.Focus();
 
             Binding binding = new Binding();
             binding.ElementName = "sliderScale";
             binding.Path = new PropertyPath("Value");
-            TextBox tmp = item.Content as TextBox;
-            //tmp.PreviewDrop += TextBox_Drop;
-            //tmp.PreviewDragEnter += Tmp_PreviewDragEnter;
-            //tmp.PreviewDragOver += Tmp_PreviewDragEnter;
-            tmp.SetBinding(TextBox.FontSizeProperty, binding);
+            TextEditor tmp = item.Content as TextEditor;
+            tmp.TextChanged += Tmp_TextChanged;
+            tmp.SetBinding(TextEditor.FontSizeProperty, binding);
         }
-
-
         #region Commands
         private void PreviewCommandExecute(object sender, ExecutedRoutedEventArgs e)
         {
@@ -95,7 +96,7 @@ namespace wpfCopilator
             if (e.Command == ApplicationUndo) return;
 
 
-            TextBox txt = e.Source as TextBox;
+            TextEditor txt = e.Source as TextEditor;
             if (txt != null)
             {
                 RoutedCommand cmd = (RoutedCommand)e.Command;
@@ -130,7 +131,7 @@ namespace wpfCopilator
         private void CommandNew_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
-        }
+        } //Всегда можно
         private void CommandOpen_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             _openDialog.Filter = "Text files (*.TXT)|*.txt|All Files (*.*)|*.*";
@@ -144,7 +145,7 @@ namespace wpfCopilator
         private void CommandSaveAs_Executed(object sender, ExecutedRoutedEventArgs? e)
         {
             TabItem item = mainTabControl.SelectedItem as TabItem;
-            TextBox textBox = item.Content as TextBox;
+            TextEditor textBox = item.Content as TextEditor;
             _saveDialog.Filter = "Text files (*.TXT)|*.txt|All Files (*.*)|*.*";
             if (_saveDialog.ShowDialog() == true)
             {
@@ -153,11 +154,13 @@ namespace wpfCopilator
                 writer.Close();
             }
             item.Tag = _saveDialog.FileName;
+            textBox.Background = Brushes.White;
         }
         private void CommandSave_Executed(object sender, ExecutedRoutedEventArgs? e)
         {
             TabItem item = mainTabControl.SelectedItem as TabItem;
-            TextBox textBox = item.Content as TextBox;
+            TextEditor textBox = item.Content as TextEditor;
+            item.Background = Brushes.White;
 
             if (item.Tag == String.Empty)
             {
@@ -168,14 +171,15 @@ namespace wpfCopilator
             StreamWriter writer = new StreamWriter(Convert.ToString(item.Tag));
             writer.WriteLine(textBox.Text);
             writer.Close();
+            
         }
         private void CommandDelete(object sender, RoutedEventArgs e)
         {
             if (mainTabControl.Items.Count == 0) return;
             TabItem tabItem = (TabItem)mainTabControl.SelectedItem;
 
-            if (tabItem.Content == null || !(tabItem.Content is TextBox)) return;
-            TextBox textbox = (TextBox)tabItem.Content;
+            if (tabItem.Content == null || !(tabItem.Content is TextEditor)) return;
+            TextEditor textbox = (TextEditor)tabItem.Content;
 
             if (!string.IsNullOrEmpty(textbox.SelectedText))
             {
@@ -314,11 +318,29 @@ namespace wpfCopilator
             ComboBoxItem tmp = comboBoxScale.SelectedItem as ComboBoxItem;
             sliderScale.Value = Convert.ToDouble(tmp.Tag);
         }
+        private void buttonX_Click(object sender, RoutedEventArgs e)
+        {
+            TabItem closingItem = mainTabControl.SelectedItem as TabItem;
+            if(closingItem.Background == Brushes.Gray)
+            {
+                MessageBoxResult messageResult = MessageBox.Show("Этот файл не сохранен, вы хотите его сохранить?", "Предупреждение", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+                if (messageResult == MessageBoxResult.Yes)
+                {
+                    CommandSave_Executed(sender, null);
+                }
+                else if (messageResult == MessageBoxResult.Cancel)
+                {
+                    return;
+                }
+            }
+            mainTabControl.Items.Remove(closingItem);
+        }
+        private void Tmp_TextChanged(object? sender, EventArgs e)
+        {
+            TabItem changeItem = mainTabControl.SelectedItem as TabItem;
+            changeItem.Background = Brushes.Gray;
+        }
         #endregion
-
-
-
-
         # region Test
         private void button_Play_Click(object sender, RoutedEventArgs e)
         {
@@ -331,7 +353,8 @@ namespace wpfCopilator
         {
 
         }
-        #endregion 
+        #endregion
+
 
     }
 }
