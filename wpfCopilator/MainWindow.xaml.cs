@@ -23,6 +23,9 @@ using Microsoft.Win32;
 using static System.Net.Mime.MediaTypeNames;
 using Application = System.Windows.Application;
 using Path = System.IO.Path;
+using LocalizatorHelper;
+using System.Xml.Linq;
+using wpfCopilator.LocalizationResources;
 
 namespace wpfCopilator
 {
@@ -43,6 +46,9 @@ namespace wpfCopilator
         public MainWindow()
         {
             InitializeComponent();
+            ResourceManagerService.RegisterManager("LocalizationRes", LocalizationRes.ResourceManager, true);
+
+
             this.AddHandler(CommandManager.PreviewExecutedEvent,
                new ExecutedRoutedEventHandler(PreviewCommandExecute));
 
@@ -75,7 +81,7 @@ namespace wpfCopilator
                     ShowLineNumbers = true,
                     SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("C#")
                 }
-            }) ; ;
+            });
             TabItem item = mainTabControl.Items[mainTabControl.Items.Count - 1] as TabItem;
             item.Focus();
 
@@ -85,6 +91,9 @@ namespace wpfCopilator
             TextEditor tmp = item.Content as TextEditor;
             tmp.TextChanged += Tmp_TextChanged;
             tmp.SetBinding(TextEditor.FontSizeProperty, binding);
+            
+
+
         }
         #region Commands
         private void PreviewCommandExecute(object sender, ExecutedRoutedEventArgs e)
@@ -353,8 +362,22 @@ namespace wpfCopilator
         {
 
         }
+
         #endregion
 
-
+        private void comboBoxLocalization_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox? comboBox = sender as ComboBox;
+            ComboBoxItem? item = comboBox.SelectedItem as ComboBoxItem;
+            switch (item?.Content)
+            {
+                case "RUS":
+                    ResourceManagerService.ChangeLocale("ru-RU");
+                    break;
+                case "ENG":
+                    ResourceManagerService.ChangeLocale("en-US");
+                    break;
+            }
+        }
     }
 }

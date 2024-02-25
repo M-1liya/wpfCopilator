@@ -32,6 +32,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="LocalizatorHelper">
+      <HintPath>bin\Release\net7.0-windows\LocalizatorHelper.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Resource Include="Assets\Cancel.png" />
     <Resource Include="Assets\Copy.png" />
     <Resource Include="Assets\Create.png" />
@@ -48,6 +54,30 @@
     <Resource Include="ManualPages\ManualAssets\CreateNewFile.png" />
     <Resource Include="ManualPages\ManualAssets\MenuEdit.png" />
     <Resource Include="ManualPages\ManualAssets\PanelTool.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="LocalizationResources\LocalizationRes.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LocalizationRes.resx</DependentUpon>
+    </Compile>
+    <Compile Update="LocalizationResources\LocalizationRes.ru.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LocalizationRes.ru.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="LocalizationResources\LocalizationRes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LocalizationRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="LocalizationResources\LocalizationRes.ru.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LocalizationRes.ru.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:wpfCopilator" xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        xmlns:local="clr-namespace:wpfCopilator" xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit" xmlns:l="clr-namespace:LocalizatorHelper;assembly=LocalizatorHelper"
         mc:Ignorable="d"
-        Title="Компилятор" Height="450" Width="800" Background="#F2F2F2"
+        Title="Compiler" Height="450" Width="800" Background="#F2F2F2"
         MinWidth="440" MinHeight="250" Closed="Window_Closed" Closing="Window_Closing"
         Icon="Assets/OIG3.ico" AllowDrop="True">
 
@@ -39,6 +39,7 @@
                 </StackPanel>
             </Border>
         </ControlTemplate>
+        <l:LocalisationHelper x:Key="helper"></l:LocalisationHelper>
     </Window.Resources>
     <Window.CommandBindings>
         <CommandBinding Command="New" 
@@ -84,38 +85,38 @@
         </Grid.ColumnDefinitions>
 
         <Menu Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
-            <MenuItem Header="Файл">
-                <MenuItem Header="Создать" Command="New"/>
-                <MenuItem Header="Открыть" Command="Open" />
-                <MenuItem Header="Сохранить" Command="Save"/>
-                <MenuItem Header="Сохранить как" Command="SaveAs" />
-                <MenuItem Name ="MenuItemExit" Header="Выход" Click="MenuItemExit_Click"/>
+            <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.FILE]}">
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.CREATE]}" Command="New"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.OPEN]}" Command="Open" />
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.SAVE]}" Command="Save"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.SAVEALL]}" Command="SaveAs" />
+                <MenuItem Name ="MenuItemExit" Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.EXIT]}" Click="MenuItemExit_Click"/>
             </MenuItem>
-            <MenuItem Header="Правка">
-                <MenuItem Header="Отменить"/>
-                <MenuItem Header="Повторить"/>
-                <MenuItem Header="Вырезать" Command="Cut"/>
-                <MenuItem Header="Копировать" Command="Copy"/>
-                <MenuItem Header="Вставить" Command="Paste"/>
-                <MenuItem Header="Удалить" Click="CommandDelete"/>
-                <MenuItem Header="Выделить все" Command="SelectAll"/>
+            <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.EDIT]}">
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.CANCEL]}"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.REPEAT]}"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.CUT]}" Command="Cut"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.COPY]}" Command="Copy"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.PASTE]}" Command="Paste"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.DELETE]}" Click="CommandDelete"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.SELECTALL]}" Command="SelectAll"/>
             </MenuItem>
-            <MenuItem Header="Текст">
-                <MenuItem Header="Постановка задачи"/>
-                <MenuItem Header="Грамматика"/>
-                <MenuItem Header="Постановка грамматики"/>
-                <MenuItem Header="Метод анализа"/>
-                <MenuItem Header="Диагностика и нейтрализация ошибок"/>
-                <MenuItem Header="Тестовый пример"/>
-                <MenuItem Header="Список литературы"/>
-                <MenuItem Header="Исходный код программы"/>
+            <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.TEXT]}">
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.PROBLEMSTATEMENT]}"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.GRAMMAR]}"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.GRAMMARSETTING]}"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.ANALYSISMETHOD]}"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.DIAGNOSISANDNEUTRALIZATIONOFERRORS]}"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.TESTCASE]}"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.REFERENCE]}"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.PROGRAMSOURCECODE]}"/>
             </MenuItem>
 
-            <MenuItem Header="Пуск"/>
+            <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.START]}"/>
 
-            <MenuItem Header="Справка">
-                <MenuItem Header="Вызов справки" Click="Click_HelpButton"/>
-                <MenuItem Header="О программе" Click="Click_AboutProgram"/>
+            <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.HELP]}">
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.CALLHELP]}" Click="Click_HelpButton"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.ABOUTPROGRAM]}" Click="Click_AboutProgram"/>
             </MenuItem>
         </Menu>
 
@@ -273,6 +274,10 @@
                 <ComboBoxItem Tag="56">400%</ComboBoxItem>
             </ComboBox>
             <Label x:Name="lang"/>
+            <ComboBox  Name="comboBoxLocalization" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Height="Auto" Grid.RowSpan="2" IsReadOnly="True" SelectedIndex="1" SelectionChanged="comboBoxLocalization_SelectionChanged">
+                <ComboBoxItem Tag="8">RUS</ComboBoxItem>
+                <ComboBoxItem Tag="10">ENG</ComboBoxItem>
+            </ComboBox>
 
         </StatusBar>
     </Grid>
