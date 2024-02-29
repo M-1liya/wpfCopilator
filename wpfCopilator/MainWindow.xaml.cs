@@ -1,31 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Media;
-using System.Reflection.PortableExecutable;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Ribbon;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using ICSharpCode.AvalonEdit;
-using ICSharpCode.AvalonEdit.Highlighting;
-using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using Microsoft.Win32;
-using static System.Net.Mime.MediaTypeNames;
 using Application = System.Windows.Application;
 using Path = System.IO.Path;
 using LocalizatorHelper;
-using System.Xml.Linq;
 using wpfCopilator.LocalizationResources;
+using wpfCopilator.Analyzer;
+using System.Windows.Media.TextFormatting;
 
 namespace wpfCopilator
 {
@@ -60,9 +48,10 @@ namespace wpfCopilator
                 lang.Content = "Язык ввода: " + e.NewLanguage.DisplayName;
             });
         }
-        private void OpenNewFile(string Header, string pathFile, string Text)
-        { 
 
+        private void OpenNewFile(string Header, string pathFile, string Text)
+        {
+            
             mainTabControl.Items.Add(new TabItem
             {
                 Template = this.FindResource("CloseableTabItem") as ControlTemplate,
@@ -79,9 +68,11 @@ namespace wpfCopilator
                     VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
                     FontFamily = new FontFamily("Consolas"),
                     ShowLineNumbers = true,
-                    SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("C#")
+                    SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("C#"),
+                    HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled
+
                 }
-            });
+            }); 
             TabItem item = mainTabControl.Items[mainTabControl.Items.Count - 1] as TabItem;
             item.Focus();
 
@@ -351,13 +342,34 @@ namespace wpfCopilator
         }
         #endregion
         # region Test
-        private void button_Play_Click(object sender, RoutedEventArgs e)
+        private async void button_Play_Click(object sender, RoutedEventArgs e)
         {
+/*
+enum Months
+{
+	JAN, FEB, MAR,
+	APR,
+	MAY,
+	JUN;
+}
+*/
+            if (mainTabControl.Items.Count == 0) return;
 
-            TabItem tmp = new TabItem();
-            tmp.Style = (Style)Application.Current.Resources["DictionaryPanelTool"];
-            testtabControl.Items.Add(tmp);
+            TabItem _selectedItem = mainTabControl.SelectedItem as TabItem;
+            TextEditor _textEditor = _selectedItem.Content as TextEditor;
+
+            string lines = _textEditor.Text;
+
+            int countLines = 1;
+            foreach(char c in lines)
+            {
+                if (c == '\n') countLines++;
+            }
+            tE.Text = await Task.Run(() => EnumAnalyzer.Analyze(lines));
+           
         }
+
+ 
         private void TabItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 
@@ -373,11 +385,19 @@ namespace wpfCopilator
             {
                 case "RUS":
                     ResourceManagerService.ChangeLocale("ru-RU");
+                    this.Title = "Компилятор";
                     break;
                 case "ENG":
                     ResourceManagerService.ChangeLocale("en-US");
+                    this.Title = "Compile";
                     break;
+                default:
+                    ResourceManagerService.ChangeLocale("en-US");
+                    this.Title = "Compile";
+                    break;
+
             }
         }
+
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:wpfCopilator" xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit" xmlns:l="clr-namespace:LocalizatorHelper;assembly=LocalizatorHelper"
         mc:Ignorable="d"
-        Title="Compiler" Height="450" Width="800" Background="#F2F2F2"
+        Title="Compiler" Height="600" Width="900" Background="#F2F2F2"
         MinWidth="440" MinHeight="250" Closed="Window_Closed" Closing="Window_Closing"
         Icon="Assets/OIG3.ico" AllowDrop="True">
 
@@ -233,21 +233,25 @@
             </Grid>
         </ToolBar>
 
-        <TabControl x:Name="mainTabControl" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" AllowDrop="True" PreviewDragEnter="Tmp_PreviewDragEnter" PreviewDragLeave="Tmp_PreviewDragEnter" PreviewDrop="TextBox_Drop"/>
+        <TabControl x:Name="mainTabControl" 
+                    Grid.Row="2" 
+                    Grid.Column="1" 
+                    Grid.ColumnSpan="4" 
+                    AllowDrop="True" 
+                    PreviewDragEnter="Tmp_PreviewDragEnter" 
+                    PreviewDragLeave="Tmp_PreviewDragEnter" 
+                    PreviewDrop="TextBox_Drop"/>
 
         <TabControl Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Name ="testtabControl">
            <!-- <TabItem MouseDoubleClick="TabItem_MouseDoubleClick" Tag="1" Style="{DynamicResource TabItemStyle}"/>-->
-            <TabItem Header="Лог">
-                <ListBox Grid.Row="3" Name="lstHistory" Margin="5" DisplayMemberPath="CommandName" FontSize ="{Binding ElementName=sliderScale,Path=Value}"></ListBox>
-            </TabItem>
-            <TabItem Header="Тест">
+            <TabItem Header="Отладка">
                 <avalonedit:TextEditor
-                        Name="tE"
+                        x:Name="tE"
                         FontFamily="Consolas"
                         SyntaxHighlighting="C#"
                         FontSize="10pt"/>
             </TabItem>
-            <TabItem Header="Таблица" Template="{DynamicResource CloseableTabItem}" Background ="White">
+            <TabItem Header="Ошибки" Template="{DynamicResource CloseableTabItem}" Background ="White">
                 <DataGrid AutoGenerateColumns="False" FontSize ="{Binding ElementName=sliderScale,Path=Value}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="300" Header="File Path"/>
@@ -256,6 +260,9 @@
                         <DataGridTextColumn Width="*"  Header="Message"/>
                     </DataGrid.Columns>
                 </DataGrid>
+            </TabItem>
+            <TabItem Header="Лог">
+                <ListBox Grid.Row="3" Name="lstHistory" Margin="5" DisplayMemberPath="CommandName" FontSize ="{Binding ElementName=sliderScale,Path=Value}"></ListBox>
             </TabItem>
         </TabControl>
 
