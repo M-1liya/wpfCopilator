@@ -25,8 +25,9 @@ enum Months
             StringBuilder sb = new StringBuilder();
             StringBuilder resultBuilder = new StringBuilder();
 
+            text += '\n';
             //Разделение текста на строчки
-            foreach(char c in text)
+            foreach (char c in text)
             {
                 if(c == '\n')
                 {
@@ -36,6 +37,8 @@ enum Months
                 sb.Append(c);
             }
             sb.Clear();
+
+
             
             for(int i = 0; i < lines.Count; i++)
             {
@@ -44,6 +47,13 @@ enum Months
 
                 foreach(char c in lines[i])
                 {
+
+                    if (char.IsLetter(c))
+                    {
+                        sb.Append(c);
+                        endWord++;
+                        continue;
+                    }
 
                     if (c == ',' || c == ' ' || c == '{' || c == '}' || c == ';' || c == '\r')
                     {
@@ -67,13 +77,14 @@ enum Months
 
                         continue;
                     }
-                    else if (c == '\n') continue;
-
-                    if(char.IsLetter(c))
+                    else if (c == '\n') 
+                        continue;
+                    else
                     {
-                        sb.Append(c);
                         endWord++;
+                        resultBuilder.AppendLine(_getInfoAboutCharacter(c, i + 1, endWord));
                     }
+
                 }
             }
 

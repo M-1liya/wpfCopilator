@@ -240,7 +240,8 @@
                     AllowDrop="True" 
                     PreviewDragEnter="Tmp_PreviewDragEnter" 
                     PreviewDragLeave="Tmp_PreviewDragEnter" 
-                    PreviewDrop="TextBox_Drop"/>
+                    PreviewDrop="TextBox_Drop"
+                    SelectionChanged="mainTabControl_SelectionChanged"/>
 
         <TabControl Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Name ="testtabControl">
            <!-- <TabItem MouseDoubleClick="TabItem_MouseDoubleClick" Tag="1" Style="{DynamicResource TabItemStyle}"/>-->
@@ -251,7 +252,7 @@
                         SyntaxHighlighting="C#"
                         FontSize="10pt"/>
             </TabItem>
-            <TabItem Header="Ошибки" Template="{DynamicResource CloseableTabItem}" Background ="White">
+            <TabItem Header="Ошибки">
                 <DataGrid AutoGenerateColumns="False" FontSize ="{Binding ElementName=sliderScale,Path=Value}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Width="300" Header="File Path"/>

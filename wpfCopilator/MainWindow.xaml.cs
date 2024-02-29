@@ -56,7 +56,6 @@ namespace wpfCopilator
             {
                 Template = this.FindResource("CloseableTabItem") as ControlTemplate,
                 Padding = new Thickness(3),
-                Background = Brushes.White,
                 AllowDrop = true,
                 Tag = pathFile,
                 Header = Header,
@@ -159,8 +158,9 @@ namespace wpfCopilator
         private void CommandSave_Executed(object sender, ExecutedRoutedEventArgs? e)
         {
             TabItem item = mainTabControl.SelectedItem as TabItem;
+            item.Header = item.Header.ToString().Replace('*', ' ');
+
             TextEditor textBox = item.Content as TextEditor;
-            item.Background = Brushes.White;
 
             if (item.Tag == String.Empty)
             {
@@ -338,10 +338,12 @@ namespace wpfCopilator
         private void Tmp_TextChanged(object? sender, EventArgs e)
         {
             TabItem changeItem = mainTabControl.SelectedItem as TabItem;
-            changeItem.Background = Brushes.Gray;
+            string header = changeItem.Header.ToString();
+            
+
+            changeItem.Header = header[header.Length - 1] == '*'? changeItem.Header : changeItem.Header.ToString() + "*";
         }
         #endregion
-        # region Test
         private async void button_Play_Click(object sender, RoutedEventArgs e)
         {
 /*
@@ -359,22 +361,17 @@ enum Months
             TextEditor _textEditor = _selectedItem.Content as TextEditor;
 
             string lines = _textEditor.Text;
-
-            int countLines = 1;
-            foreach(char c in lines)
-            {
-                if (c == '\n') countLines++;
-            }
             tE.Text = await Task.Run(() => EnumAnalyzer.Analyze(lines));
            
         }
 
+
+        # region Test
  
         private void TabItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 
         }
-
         #endregion
 
         private void comboBoxLocalization_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -399,5 +396,14 @@ enum Months
             }
         }
 
+        private void mainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (mainTabControl.SelectedItem == null || mainTabControl.Items.Count == 0) return;
+
+            foreach(TabItem item in mainTabControl.Items)
+                item.Background = Brushes.LightGray;
+
+            ( (TabItem)mainTabControl.SelectedItem ).Background = Brushes.White;
+        }
     }
 }
