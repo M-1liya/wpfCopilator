@@ -26,6 +26,7 @@ using Path = System.IO.Path;
 using LocalizatorHelper;
 using System.Xml.Linq;
 using wpfCopilator.LocalizationResources;
+using System.Text.RegularExpressions;
 
 namespace wpfCopilator
 {
@@ -353,10 +354,18 @@ namespace wpfCopilator
         # region Test
         private void button_Play_Click(object sender, RoutedEventArgs e)
         {
+            string pattern = @"String\s+\w+\s*=\s*(?:""\w*""|new\s+String\(\)|new\s+String\(\s*new\s+char\[\]\s*\{\s*('.'\s*,\s*)*'.'\s*\}\s*\)|new\s+String\(\s*new\s+char\[\]\s*\{\s*('.'\s*,\s*)*'.'\s*\}\s*,\s*.\s*,\s*.\s*\))\s*;";
+            TabItem item = mainTabControl.SelectedItem as TabItem;
+            TextEditor textBox = item.Content as TextEditor;
+            string text = textBox.Text;
+            Regex regex = new Regex(pattern);
+            MatchCollection matches = regex.Matches(text);
 
-            TabItem tmp = new TabItem();
-            tmp.Style = (Style)Application.Current.Resources["DictionaryPanelTool"];
-            testtabControl.Items.Add(tmp);
+            foreach (Match match in matches)
+            {
+                LogOutputText.Text += "Lexeme found: " + match.Value + "\n";
+                //Console.WriteLine("Lexeme found: " + match.Value);
+            }
         }
         private void TabItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {

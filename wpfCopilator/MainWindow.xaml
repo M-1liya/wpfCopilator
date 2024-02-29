@@ -240,12 +240,8 @@
             <TabItem Header="Лог">
                 <ListBox Grid.Row="3" Name="lstHistory" Margin="5" DisplayMemberPath="CommandName" FontSize ="{Binding ElementName=sliderScale,Path=Value}"></ListBox>
             </TabItem>
-            <TabItem Header="Тест">
-                <avalonedit:TextEditor
-                        Name="tE"
-                        FontFamily="Consolas"
-                        SyntaxHighlighting="C#"
-                        FontSize="10pt"/>
+            <TabItem Name ="LogOutput" Header="Ещё один лог">
+                <TextBlock Name ="LogOutputText"  FontSize ="{Binding ElementName=sliderScale,Path=Value}"></TextBlock>
             </TabItem>
             <TabItem Header="Таблица" Template="{DynamicResource CloseableTabItem}" Background ="White">
                 <DataGrid AutoGenerateColumns="False" FontSize ="{Binding ElementName=sliderScale,Path=Value}">
