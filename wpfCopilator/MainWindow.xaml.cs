@@ -14,6 +14,7 @@ using LocalizatorHelper;
 using wpfCopilator.LocalizationResources;
 using wpfCopilator.Analyzer;
 using System.Windows.Media.TextFormatting;
+using static System.Windows.Forms.Design.AxImporter;
 
 namespace wpfCopilator
 {
@@ -68,9 +69,10 @@ namespace wpfCopilator
                     FontFamily = new FontFamily("Consolas"),
                     ShowLineNumbers = true,
                     SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("C#"),
-                    HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled
+                    HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
+                    
 
-                }
+        }
             }); 
             TabItem item = mainTabControl.Items[mainTabControl.Items.Count - 1] as TabItem;
             item.Focus();
@@ -81,6 +83,7 @@ namespace wpfCopilator
             TextEditor tmp = item.Content as TextEditor;
             tmp.TextChanged += Tmp_TextChanged;
             tmp.SetBinding(TextEditor.FontSizeProperty, binding);
+            tmp.TextArea.Options.ConvertTabsToSpaces = true;
             
 
 

@@ -25,12 +25,14 @@ enum Months
             StringBuilder sb = new StringBuilder();
             StringBuilder resultBuilder = new StringBuilder();
 
+            text.Replace('\r', '\n');
             text += '\n';
             //Разделение текста на строчки
             foreach (char c in text)
             {
                 if(c == '\n')
                 {
+                    sb.Append(c);
                     lines.Add(sb.ToString());
                     sb.Clear();
                 }
@@ -55,22 +57,22 @@ enum Months
                         continue;
                     }
 
-                    if (c == ',' || c == ' ' || c == '{' || c == '}' || c == ';' || c == '\r')
+                    if (c == ',' || c == ' ' || c == '{' || c == '}' || c == ';' || c == '\r' || c == lines[i][lines[i].Length - 1])
                     {
-                        endWord++;
+                        if (c != '\r' && c != '\n')
+                            endWord++;
+
                         if (sb.Length != 0)
                         {
                             //Вычитаем endWord - 1 так как сейчас 'c' уже не слово
                             resultBuilder.AppendLine(_getInfoAboutWord(sb.ToString(), i + 1, startWord, endWord - 1));
-                            startWord = endWord + 1;
                             sb.Clear();
 
-                            resultBuilder.AppendLine(_getInfoAboutCharacter(c, i + 1, endWord));
-                            continue;
                         }
-                        else if(c != '\r')
+
+                        if(c != '\r' && c != '\n')
                         {
-                            resultBuilder.AppendLine(_getInfoAboutCharacter(c, i + 1, startWord));
+                            resultBuilder.AppendLine(_getInfoAboutCharacter(c, i + 1, endWord));
                         }
 
                         startWord = endWord + 1;
@@ -82,7 +84,17 @@ enum Months
                     else
                     {
                         endWord++;
-                        resultBuilder.AppendLine(_getInfoAboutCharacter(c, i + 1, endWord));
+
+                        if(sb.Length != 0)
+                        {
+                            sb.Append(c);
+                            resultBuilder.AppendLine(_getInfoAboutWord(sb.ToString(), i + 1, startWord, endWord));
+                        }
+                        else
+                            resultBuilder.AppendLine(_getInfoAboutCharacter(c, i + 1, endWord));
+
+                        startWord = endWord + 1;
+                        sb.Clear() ;
                     }
 
                 }
@@ -101,7 +113,14 @@ enum Months
             else if(str == "enum")
                 result = "code: " + 12 + "\tключевое слово" + result;
             else
+            {
+                foreach(char c in str)
+                {
+                    if (!char.IsLetterOrDigit(c))
+                        return "ERROR" + result;
+                }
                 result = "code: " + 13 + "\tидентификатор" + result;
+            }
 
             return result;
         }
