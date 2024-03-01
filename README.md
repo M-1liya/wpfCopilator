@@ -6,7 +6,8 @@
 ![image](https://github.com/M-1liya/wpfCopilator/assets/114402298/306c6c40-caaa-47c3-a1f4-26514704592c)
 
 ## Граф:
-![image](https://github.com/M-1liya/wpfCopilator/assets/114402298/10706371-3853-4468-bf4a-36c24d6b8848)
+![image](https://github.com/M-1liya/wpfCopilator/assets/114402298/c3a9e8b9-a024-4229-ac51-b14443be449e)
+
 
 
 
