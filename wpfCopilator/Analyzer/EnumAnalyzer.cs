@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace wpfCopilator.Analyzer
@@ -19,7 +20,7 @@ enum Months
 
     public static class EnumAnalyzer
     {
-        public static async Task<string> Analyze(string text)
+        public static string Analyze(string text)
         {
             List<string> lines = new List<string>();
             StringBuilder sb = new StringBuilder();
@@ -103,7 +104,6 @@ enum Months
             return resultBuilder.ToString();
         }
 
-
         private static string _getInfoAboutWord(string str, int numLine, int startWord, int endWord)
         {
             string result = $" - {str}\t\t- Строка {numLine}, с {startWord} по {endWord} символ";
@@ -154,6 +154,79 @@ enum Months
             return result;
 
         }
+
+
+        public static Task<List<Token>> AnalyzeAsync(string text)
+        {
+            List<Token> tokens = new List<Token>();
+            List<string> lines = new List<string>();
+            StringBuilder sb = new StringBuilder();
+
+            //Разделение текста на строчки
+            foreach (char c in text)
+            {
+
+                if (c == '\n' || c == '\r')
+                {
+                    if(sb.Length != 0) lines.Add(sb.ToString());
+                    sb.Clear();
+                    continue;
+                }
+
+                sb.Append(c);
+            }
+            if (sb.Length != 0) lines.Add(sb.ToString());//Добавление последней строки
+            sb.Clear();
+
+            for (int numLine = 0; numLine < lines.Count; numLine++) 
+            {
+                int position = 0;
+
+                while(position < lines[numLine].Length)
+                {
+                    bool flag = false;//Флаг для проверки нахождения одного из токенов
+
+                    //Цикл для определения принадлежности символа(ов) одному из токенов
+                    foreach(TokenType token in TokenType.Tokens)
+                    {
+                        Regex regex = new Regex(token.Regex);
+                       
+                        Match match = Regex.Match(lines[numLine].Substring(position), "^" + token.Regex);
+
+                        if (match.Success)
+                        {
+                            tokens.Add(new Token(token, match.Value, numLine + 1, position + 1, match.Value.Length + position));
+                            position += match.Value.Length;
+                            flag = true;
+                        }
+
+                    }
+
+                    //Если токен не определен, значит есть ошибка
+                    if (!flag)
+                    {
+                        Match Er_match = Regex.Match(lines[numLine].Substring(position), "^" + TokenType.TokenError.Regex);
+
+                        if (Er_match.Success)
+                        {
+                            tokens.Add(new Token(TokenType.TokenError, Er_match.Value, numLine + 1, position + 1, Er_match.Value.Length + position));
+                            position += Er_match.Value.Length;
+                        }
+                        else if(position < lines[numLine].Length)//Непредусмотренный символ ошибки
+                        {
+                            tokens.Add(new Token(TokenType.TokenError, lines[numLine][position].ToString(), numLine, position + 1, position + 1));
+                            position++;
+                        }
+
+                    }
+
+                }
+            }
+
+            return Task.FromResult(tokens);
+        }
+
+        
 
     }
 }

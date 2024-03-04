@@ -15,6 +15,7 @@ using wpfCopilator.LocalizationResources;
 using wpfCopilator.Analyzer;
 using System.Windows.Media.TextFormatting;
 using static System.Windows.Forms.Design.AxImporter;
+using System.Collections.Generic;
 
 namespace wpfCopilator
 {
@@ -363,9 +364,15 @@ enum Months
             TabItem _selectedItem = mainTabControl.SelectedItem as TabItem;
             TextEditor _textEditor = _selectedItem.Content as TextEditor;
 
-            string lines = _textEditor.Text;
-            tE.Text = await Task.Run(() => EnumAnalyzer.Analyze(lines));
-           
+            //tE.Text = await Task.Run(() => EnumAnalyzer.Analyze(_textEditor.Text));
+
+            string text = _textEditor.Text;
+            List<Token> tokens =  await Task.Run(() => EnumAnalyzer.AnalyzeAsync(text));
+
+            tE.Text = "";
+            tokens.ForEach(token => { tE.Text += token.ToString() + "\n"; } );                
+
+
         }
 
 
