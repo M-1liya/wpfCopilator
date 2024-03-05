@@ -133,12 +133,19 @@ namespace wpfCopilator
         {
             TabItem item = mainTabControl.SelectedItem as TabItem;
             TextEditor textBox = item.Content as TextEditor;
+
             _saveDialog.Filter = "Text files (*.TXT)|*.txt|All Files (*.*)|*.*";
+
+            string fname = item.Header.ToString();
+            _saveDialog.FileName = fname.Replace("*", string.Empty);
+
             if (_saveDialog.ShowDialog() == true)
             {
                 StreamWriter writer = new StreamWriter(_saveDialog.FileName);
                 writer.WriteLine(textBox.Text);
                 writer.Close();
+
+                item.Header = _saveDialog.SafeFileName;
             }
             item.Tag = _saveDialog.FileName;
             textBox.Background = Brushes.White;
@@ -146,7 +153,6 @@ namespace wpfCopilator
         private void CommandSave_Executed(object sender, ExecutedRoutedEventArgs? e)
         {
             TabItem item = mainTabControl.SelectedItem as TabItem;
-            item.Header = item.Header.ToString().Replace('*', ' ');
 
             TextEditor textBox = item.Content as TextEditor;
 
@@ -160,6 +166,7 @@ namespace wpfCopilator
             writer.WriteLine(textBox.Text);
             writer.Close();
             
+            item.Header = item.Header.ToString().Replace("*", string.Empty);
         }
         private void CommandDelete(object sender, RoutedEventArgs e)
         {
@@ -241,14 +248,22 @@ namespace wpfCopilator
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory + "//" + "tempFilesDirectory//");
+
+            int count = 0;
+            foreach (TabItem item in mainTabControl.Items)
+            {
+                string tabItemHeader = item.Header.ToString();
+                if (tabItemHeader[tabItemHeader.Length - 1] == '*')
+                    count++;
+            }
             int i = 0;
             foreach (FileInfo file in di.GetFiles())
             {
                 i++;
             }
-            if (i != 0)
+            if (count != 0)
             {
-                MessageBoxResult messageResult = MessageBox.Show("У вас " + Convert.ToString(i) + " несохраненных файлов, вы хотите их сохранить?", "Предупреждение", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+                MessageBoxResult messageResult = MessageBox.Show("У вас " + Convert.ToString(count) + " несохраненных файлов, вы хотите их сохранить?", "Предупреждение", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
                 if (messageResult == MessageBoxResult.Yes)
                 {
                     e.Cancel = false;
@@ -359,15 +374,6 @@ enum Months
 
         }
 
-
-        # region Test
- 
-        private void TabItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-        #endregion
-
         private void comboBoxLocalization_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox? comboBox = sender as ComboBox;
@@ -389,7 +395,6 @@ enum Months
 
             }
         }
-
         private void mainTabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (mainTabControl.SelectedItem == null || mainTabControl.Items.Count == 0) return;

@@ -20,27 +20,43 @@ namespace wpfCopilator
     /// </summary>
     public partial class CreateNewWindow : Window
     {
-        public string FileName { get; set; }
+        private string? _fileName;
+        public string? FileName => _fileName;
+        private readonly char[] forbiddenChars = {'\\', '/', '|', '*', '?', ':', '"', '<', '>' };
+        string forbiddenChars_str = @"\ / | * ? : "" < >";
         public CreateNewWindow()
         {
             InitializeComponent();
+            CreateButton.IsEnabled = false;
 
         }
 
-        private void CreateButton_Click(object sender, RoutedEventArgs e)
+        private void CreateButton_Click2(object sender, RoutedEventArgs e) 
         {
-            if(!Directory.Exists("tempFilesDirectory"))
+            string fname = myTextBox.Text;
+
+            foreach(char c in forbiddenChars) 
             {
-                Directory.CreateDirectory("tempFilesDirectory");
+                if(fname.Contains(c))
+                {
+                    
+                    MessageBox.Show($"В имени файла находятся запрещенные символы: {forbiddenChars_str}", "Error",
+                        MessageBoxButton.OK, MessageBoxImage.Error); 
+                    return;
+                }
             }
-            FileName = myTextBox.Text;
-            File.Create(Environment.CurrentDirectory + "//" + "tempFilesDirectory//" + FileName + ".txt");
+            _fileName = myTextBox.Text;
             this.Close();
-        }
+        } 
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void CancelButton_Click(object sender, RoutedEventArgs e) => this.Close();
+
+        private void myTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            this.Close();
+            if(string.IsNullOrWhiteSpace(myTextBox.Text))
+                CreateButton.IsEnabled = false;
+            else 
+                CreateButton.IsEnabled = true;
         }
     }
 }

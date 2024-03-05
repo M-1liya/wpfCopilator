@@ -242,10 +242,11 @@
            <!-- <TabItem MouseDoubleClick="TabItem_MouseDoubleClick" Tag="1" Style="{DynamicResource TabItemStyle}"/>-->
             <TabItem Header="Отладка">
                 <avalonedit:TextEditor
-                        x:Name="tE"
-                        FontFamily="Consolas"
-                        SyntaxHighlighting="C#"
-                        FontSize="10pt"/>
+                    x:Name="tE"
+                    HorizontalScrollBarVisibility="Disabled"
+                    FontFamily="Consolas"
+                    SyntaxHighlighting="C#"
+                    FontSize="10pt"/>
             </TabItem>
             <TabItem Header="Ошибки">
                 <DataGrid AutoGenerateColumns="False" FontSize ="{Binding ElementName=sliderScale,Path=Value}">
