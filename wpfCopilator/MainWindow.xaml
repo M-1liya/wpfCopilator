@@ -243,7 +243,8 @@
             <TabItem Header="Отладка">
                 <avalonedit:TextEditor
                     x:Name="tE"
-                    HorizontalScrollBarVisibility="Disabled"
+                    HorizontalScrollBarVisibility="Auto"
+                    VerticalScrollBarVisibility="Auto"
                     FontFamily="Consolas"
                     SyntaxHighlighting="C#"
                     FontSize="10pt"/>

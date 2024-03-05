@@ -61,7 +61,8 @@ namespace wpfCopilator
                 AllowDrop = true,
                 Tag = pathFile,
                 Header = Header,
-                Content = new TextEditor
+                
+                Content = new TextEditor                
                 {
                     Name = "txt",
                     Text = Text,
@@ -70,11 +71,11 @@ namespace wpfCopilator
                     FontFamily = new FontFamily("Consolas"),
                     ShowLineNumbers = true,
                     SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("C#"),
-                    HorizontalScrollBarVisibility = ScrollBarVisibility.Disabled,
-                    
+                    HorizontalScrollBarVisibility = ScrollBarVisibility.Auto     
+                }
 
-        }
             }); 
+
             TabItem item = mainTabControl.Items[mainTabControl.Items.Count - 1] as TabItem;
             item.Focus();
 
@@ -85,10 +86,8 @@ namespace wpfCopilator
             tmp.TextChanged += Tmp_TextChanged;
             tmp.SetBinding(TextEditor.FontSizeProperty, binding);
             tmp.TextArea.Options.ConvertTabsToSpaces = true;
-            
-
-
         }
+
         #region Commands
         private void PreviewCommandExecute(object sender, ExecutedRoutedEventArgs e)
         {
@@ -253,7 +252,7 @@ namespace wpfCopilator
             foreach (TabItem item in mainTabControl.Items)
             {
                 string tabItemHeader = item.Header.ToString();
-                if (tabItemHeader[tabItemHeader.Length - 1] == '*')
+                if (item.Header.ToString().Contains('*'))
                     count++;
             }
             int i = 0;
@@ -263,7 +262,8 @@ namespace wpfCopilator
             }
             if (count != 0)
             {
-                MessageBoxResult messageResult = MessageBox.Show("У вас " + Convert.ToString(count) + " несохраненных файлов, вы хотите их сохранить?", "Предупреждение", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
+                MessageBoxResult messageResult = MessageBox.Show("У вас " + count + " несохраненных файлов, вы хотите их сохранить?",
+                    "Предупреждение", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
                 if (messageResult == MessageBoxResult.Yes)
                 {
                     e.Cancel = false;
@@ -280,7 +280,15 @@ namespace wpfCopilator
                 switch(messageResult)
                 {
                     case MessageBoxResult.Yes:
-                        CommandSaveAs_Executed(sender, null);
+
+                        foreach (TabItem item in mainTabControl.Items)
+                        {
+                            if (item.Header.ToString().Contains('*'))
+                                item.Focus();
+
+                            CommandSave_Executed(sender, null);
+                        }
+
                         e.Cancel = false;
                         break;
 
@@ -323,8 +331,10 @@ namespace wpfCopilator
         }
         private void buttonX_Click(object sender, RoutedEventArgs e)
         {
+
             TabItem closingItem = mainTabControl.SelectedItem as TabItem;
-            if(closingItem.Background == Brushes.Gray)
+
+            if (closingItem.Header.ToString().Contains('*') || string.IsNullOrEmpty(closingItem.Tag.ToString()))
             {
                 MessageBoxResult messageResult = MessageBox.Show("Этот файл не сохранен, вы хотите его сохранить?", "Предупреждение", MessageBoxButton.YesNoCancel, MessageBoxImage.Warning);
                 if (messageResult == MessageBoxResult.Yes)
