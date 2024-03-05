@@ -58,11 +58,6 @@
                         Executed="CommandSave_Executed"
                         CanExecute="CommandNew_CanExecute">
         </CommandBinding>
-        <CommandBinding Command="local:MainWindow.ApplicationUndo"
-                    Executed="ApplicationUndoCommand_Executed"
-                    CanExecute="ApplicationUndoCommand_CanExecute">
-            
-        </CommandBinding>
 
     </Window.CommandBindings>
 
@@ -93,8 +88,8 @@
                 <MenuItem Name ="MenuItemExit" Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.EXIT]}" Click="MenuItemExit_Click"/>
             </MenuItem>
             <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.EDIT]}">
-                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.CANCEL]}"/>
-                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.REPEAT]}"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.CANCEL]}" Command="Undo"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.REPEAT]}" Command="Redo"/>
                 <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.CUT]}" Command="Cut"/>
                 <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.COPY]}" Command="Copy"/>
                 <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.PASTE]}" Command="Paste"/>
@@ -164,7 +159,7 @@
                 </Button>
 
                 <!-- Кнопки меню "Правка"-->
-                <Button x:Name="button_Cancel" Command = "local:MainWindow.ApplicationUndo" Grid.Column="4" Style="{StaticResource ButtonPanelTool}">
+                <Button x:Name="button_Cancel" Command = "Undo" Grid.Column="4" Style="{StaticResource ButtonPanelTool}">
 
                     <Button.ToolTip>
                         <ToolTip>Отменить (Ctrl+Z)</ToolTip>
@@ -172,7 +167,7 @@
 
                     <Image Source="Assets/Cancel.png" Height="30"/>
                 </Button>
-                <Button x:Name="button_Return" Grid.Column="5" Style="{StaticResource ButtonPanelTool}">
+                <Button x:Name="button_Return" Grid.Column="5" Style="{StaticResource ButtonPanelTool}" Command="Redo">
 
                     <Button.ToolTip>
                         <ToolTip>Вернуть (Ctrl+Y)</ToolTip>

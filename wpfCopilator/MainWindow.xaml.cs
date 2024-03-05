@@ -113,23 +113,7 @@ namespace wpfCopilator
                 lstHistory.Items.Add(item);
             }
         }
-        private void ApplicationUndoCommand_Executed(object sender, RoutedEventArgs e)
-        {
-            // Достаем из истории последнюю запись.
-            CommandHistoryItem historyItem = ((ListBoxItem)lstHistory.Items[lstHistory.Items.Count - 1]).Content as CommandHistoryItem;
-            // Выполняем отмену.
-            historyItem.Undo();
-            // Удаляем запись из истории.
-            lstHistory.Items.Remove(lstHistory.Items[lstHistory.Items.Count - 1]);
-        }
-        private void ApplicationUndoCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            // Команда ApplicationUndo активна если журнал истории не пуст.
-            if (lstHistory == null || lstHistory.Items.Count == 0)
-                e.CanExecute = false;
-            else
-                e.CanExecute = true;
-        }
+
 
         private void CommandNew_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
