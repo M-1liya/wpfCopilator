@@ -16,6 +16,7 @@ using wpfCopilator.Analyzer;
 using System.Collections.Generic;
 using wpfCopilator.Parser;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace wpfCopilator
 {
@@ -359,50 +360,47 @@ namespace wpfCopilator
         #endregion
         private async void button_Play_Click(object sender, RoutedEventArgs e)
         {
-/*
-enum Months
-{
-	JAN, FEB, MAR,
-	APR,
-	MAY,
-	JUN;
-}
-*/
             if (mainTabControl.Items.Count == 0) return;
+
+            this.Cursor = Cursors.AppStarting;
 
             TabItem _selectedItem = mainTabControl.SelectedItem as TabItem;
             TextEditor _textEditor = _selectedItem.Content as TextEditor;
 
-
             string text = _textEditor.Text;
-            List<Token> tokens = await Task.Run(() => EnumAnalyzer.AnalyzeAsync(text));
 
-            (List<Token> result, List<Token> errors) parsedTokens = await Task.Run(() =>  Grammatic.Parse(tokens));
 
-            _updateErrorDataGrid(tokens);
+            List<Token> tokens = await Task.Run(() => EnumAnalyzer.AnalyzeAsync(text));//Вызов Анализатора
+            (List<Token> result, List<Token> errors) parsedTokens = await Task.Run(() =>  Grammatic.Parse(tokens));//Вызов парсера
+
+            
+            _updateErrorDataGrid(tokens, _selectedItem.Tag.ToString());
 
 
             tE.Text = "";
-            parsedTokens.result.ForEach(token => { tE.Text += token.Text; } );
-            
+            parsedTokens.result.ForEach(token => { tE.Text += token.Text; } );              
+
             tE.Text += "\nErrors:\n";
-            parsedTokens.errors.ForEach(token => { tE.Text += token.ToString(); } );                
+            parsedTokens.errors.ForEach(token => { tE.Text += token.ToString() + "\n"; } );
 
-
+            this.Cursor = Cursors.Arrow;
         }
 
-        private void _updateErrorDataGrid(List<Token> tokens)
+        private void _updateErrorDataGrid(List<Token> tokens, string filePath)
         {
-            ObservableCollection<ErrorToken> errors = new ObservableCollection<ErrorToken>()
-            {
-                new ErrorToken(message: "message", line: "1", column: "2", filePath: "file.txt")
-            };
-            ErrorsDataGrid.Items.Clear();
+            BindingList<ErrorToken> errors = new BindingList<ErrorToken>();
+            errors.Clear();
 
             foreach (Token token in tokens) 
             {
-                if(token.Type.Name == TokenType.TokenTypes.Error)
-                    errors.Add(new ErrorToken(message: "message", line: token.PosLine.ToString(), column: token.PosStart.ToString(), filePath: "file.txt"));
+                if (token.Type.Name == TokenType.TokenTypes.Error)
+                    errors.Add(new ErrorToken()
+                    {
+                        Message = $"Неизвестный символ '{token.Text}'",
+                        Line = token.PosLine.ToString(),
+                        Column = token.PosStart.ToString() + "-" + token.PosEnd.ToString(),
+                        FilePath = filePath
+                    });
             }
 
             ErrorsDataGrid.ItemsSource = errors;

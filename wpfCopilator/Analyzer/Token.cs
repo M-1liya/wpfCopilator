@@ -39,4 +39,5 @@ namespace wpfCopilator.Analyzer
         public int PosEnd { get => _posEnd; set => _posEnd = value; }
         public int PosLine { get => _posLine; set => _posLine = value; }
     }
+
 }

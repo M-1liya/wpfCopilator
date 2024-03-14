@@ -30,7 +30,8 @@ namespace wpfCopilator.Parser
         {
             List<object[]> productsList = new E().ProductsList;
 
-            for (int t = 0, p = 0; t < tokens.Count && p < products.Length; t++)
+            int p = 0;
+            for (int t = 0; t < tokens.Count && p < products.Length; t++)
             {
                 switch (products[p])
                 {
@@ -60,6 +61,7 @@ namespace wpfCopilator.Parser
 
                         if (productsList.Count > 1)
                         {
+
                             foreach (object[] item in productsList)
                             {
                                 List<Token> tmp_result = new List<Token>();
@@ -72,16 +74,13 @@ namespace wpfCopilator.Parser
 
                                     return true;
                                 }
-
                             }
+
 
                         }
                         products = productsList[0] != null ? productsList[0] : throw new Exception("Empty products list");
 
-
-                        if (tokens[t].Type.Name == TokenTypes.Space)
-                            result.Add(tokens[t]);
-
+                        t--;
                         p = 0;
                         break;
 
@@ -91,10 +90,16 @@ namespace wpfCopilator.Parser
                 }
             }
 
-            if (errors.Count > 0) 
-                return false;
-            else 
+
+            //Если ошибок нет возврашается TRUE
+            //Если по правилам продукции дошли до конца и последний токен, который был добавлен, завершает эту продукцию, то возвращаем TRUE
+            //В противном случае - FALSE
+            if (errors.Count == 0) 
                 return true;
+            else if (p == products.Length && tokens[tokens.Count - 1].Type.Name == (TokenTypes)products[p - 1]) 
+                return true;
+            else
+                return false;
         }
 
 

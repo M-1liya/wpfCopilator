@@ -13,7 +13,10 @@ namespace wpfCopilator.Analyzer
         public string Column {  get; set; }
         public string FilePath {  get; set; }
 
-
+        public ErrorToken()
+        {
+            
+        }
         public ErrorToken(string message, string line, string column, string filePath)
         {
             this.Message = message;

@@ -214,7 +214,7 @@ enum Months
                         }
                         else if(position < lines[numLine].Length)//Непредусмотренный символ ошибки
                         {
-                            tokens.Add(new Token(TokenType.TokenError, lines[numLine][position].ToString(), numLine, position + 1, position + 1));
+                            tokens.Add(new Token(TokenType.TokenError, lines[numLine][position].ToString(), numLine + 1, position + 1, position + 1));
                             position++;
                         }
 

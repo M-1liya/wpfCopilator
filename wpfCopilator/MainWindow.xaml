@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="Compiler" Height="600" Width="900" Background="#F2F2F2"
         MinWidth="440" MinHeight="250" Closed="Window_Closed" Closing="Window_Closing"
-        Icon="Assets/OIG3.ico" AllowDrop="True">
+        Icon="Assets/OIG3.ico" AllowDrop="True"
+        >
 
     <Window.Resources>
         <ControlTemplate TargetType="TabItem" x:Key="CloseableTabItem">
@@ -240,27 +241,27 @@
 
         <TabControl Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Name ="testtabControl">
            <!-- <TabItem MouseDoubleClick="TabItem_MouseDoubleClick" Tag="1" Style="{DynamicResource TabItemStyle}"/>-->
-            <TabItem Header="Отладка">
+            <TabItem Header="Отладка" >
                 <avalonedit:TextEditor
                     x:Name="tE"
                     HorizontalScrollBarVisibility="Auto"
                     VerticalScrollBarVisibility="Auto"
                     FontFamily="Consolas"
                     SyntaxHighlighting="C#"
-                    FontSize="10pt"/>
+                    FontSize ="{Binding ElementName=sliderScale,Path=Value}"/>
             </TabItem>
             <TabItem Header="Ошибки">
-                <DataGrid x:Name="ErrorsDataGrid" AutoGenerateColumns="False" FontSize ="{Binding ElementName=sliderScale,Path=Value}">
-                    <!-- <DataGrid.Columns>
-                        <DataGridTextColumn Width="300" Header="File Path"/>
-                        <DataGridTextColumn Header="Line"/>
-                        <DataGridTextColumn Header="Column"/>
-                        <DataGridTextColumn Width="*"  Header="Message"/>
-                    </DataGrid.Columns> -->
+                <DataGrid x:Name="ErrorsDataGrid" AutoGenerateColumns="False" FontSize ="{Binding ElementName=sliderScale,Path=Value}" CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="300" Header="File Path" IsReadOnly="True" Binding="{Binding Path= FilePath}"/>
+                        <DataGridTextColumn Header="Line" IsReadOnly="True" Binding="{Binding Path= Line}"/>
+                        <DataGridTextColumn Header="Column" IsReadOnly="True" Binding="{Binding Path= Column}"/>
+                        <DataGridTextColumn Width="*"  Header="Message" IsReadOnly="True" Binding="{Binding Path= Message}"/>
+                    </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
             <TabItem Header="Лог">
-                <ListBox Grid.Row="3" Name="lstHistory" Margin="5" DisplayMemberPath="CommandName" FontSize ="{Binding ElementName=sliderScale,Path=Value}"></ListBox>
+                <ListBox Grid.Row="3" Name="lstHistory" Margin="5" DisplayMemberPath="CommandName" ></ListBox>
             </TabItem>
         </TabControl>
 
