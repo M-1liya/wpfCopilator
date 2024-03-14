@@ -13,9 +13,9 @@ using Path = System.IO.Path;
 using LocalizatorHelper;
 using wpfCopilator.LocalizationResources;
 using wpfCopilator.Analyzer;
-using System.Windows.Media.TextFormatting;
-using static System.Windows.Forms.Design.AxImporter;
 using System.Collections.Generic;
+using wpfCopilator.Parser;
+using System.Collections.ObjectModel;
 
 namespace wpfCopilator
 {
@@ -373,15 +373,39 @@ enum Months
             TabItem _selectedItem = mainTabControl.SelectedItem as TabItem;
             TextEditor _textEditor = _selectedItem.Content as TextEditor;
 
-            //tE.Text = await Task.Run(() => EnumAnalyzer.Analyze(_textEditor.Text));
 
             string text = _textEditor.Text;
-            List<Token> tokens =  await Task.Run(() => EnumAnalyzer.AnalyzeAsync(text));
+            List<Token> tokens = await Task.Run(() => EnumAnalyzer.AnalyzeAsync(text));
+
+            (List<Token> result, List<Token> errors) parsedTokens = await Task.Run(() =>  Grammatic.Parse(tokens));
+
+            _updateErrorDataGrid(tokens);
+
 
             tE.Text = "";
-            tokens.ForEach(token => { tE.Text += token.ToString() + "\n"; } );                
+            parsedTokens.result.ForEach(token => { tE.Text += token.Text; } );
+            
+            tE.Text += "\nErrors:\n";
+            parsedTokens.errors.ForEach(token => { tE.Text += token.ToString(); } );                
 
 
+        }
+
+        private void _updateErrorDataGrid(List<Token> tokens)
+        {
+            ObservableCollection<ErrorToken> errors = new ObservableCollection<ErrorToken>()
+            {
+                new ErrorToken(message: "message", line: "1", column: "2", filePath: "file.txt")
+            };
+            ErrorsDataGrid.Items.Clear();
+
+            foreach (Token token in tokens) 
+            {
+                if(token.Type.Name == TokenType.TokenTypes.Error)
+                    errors.Add(new ErrorToken(message: "message", line: token.PosLine.ToString(), column: token.PosStart.ToString(), filePath: "file.txt"));
+            }
+
+            ErrorsDataGrid.ItemsSource = errors;
         }
 
         private void comboBoxLocalization_SelectionChanged(object sender, SelectionChangedEventArgs e)

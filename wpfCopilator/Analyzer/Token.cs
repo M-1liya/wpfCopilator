@@ -25,12 +25,12 @@ namespace wpfCopilator.Analyzer
 
         public override string ToString()
         {
-            
-            Text = Text.Replace("\n", "\\n");
-            Text = Text.Replace("\r", "\\r");
-            Text = Text.Replace("\t", "\\t");
-            Text = Text.Replace(" ", "'_'");
-            return $"code: {_type.code}\t- {_type.Name}\t - {Text}\t- Строка {PosLine}, с {PosStart} по {PosEnd}";
+            string _tmpText = Text;
+            _tmpText = Text.Replace("\n", "\\n");
+            _tmpText = Text.Replace("\r", "\\r");
+            _tmpText = Text.Replace("\t", "\\t");
+            _tmpText = Text.Replace(" ", "'_'");
+            return $"code: {_type.code}\t- {_type.Name}\t - {_tmpText}\t- Строка {PosLine}, с {PosStart} по {PosEnd}";
         }
 
         public TokenType Type { get => _type; set => _type = value; }

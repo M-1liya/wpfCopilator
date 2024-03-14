@@ -250,13 +250,13 @@
                     FontSize="10pt"/>
             </TabItem>
             <TabItem Header="Ошибки">
-                <DataGrid AutoGenerateColumns="False" FontSize ="{Binding ElementName=sliderScale,Path=Value}">
-                    <DataGrid.Columns>
+                <DataGrid x:Name="ErrorsDataGrid" AutoGenerateColumns="False" FontSize ="{Binding ElementName=sliderScale,Path=Value}">
+                    <!-- <DataGrid.Columns>
                         <DataGridTextColumn Width="300" Header="File Path"/>
                         <DataGridTextColumn Header="Line"/>
                         <DataGridTextColumn Header="Column"/>
                         <DataGridTextColumn Width="*"  Header="Message"/>
-                    </DataGrid.Columns>
+                    </DataGrid.Columns> -->
                 </DataGrid>
             </TabItem>
             <TabItem Header="Лог">
