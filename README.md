@@ -13,7 +13,8 @@
 ![image](https://github.com/M-1liya/wpfCopilator/assets/114402298/75e79fc5-17d7-412f-a8d9-934235c1b304)
 
 ### Граф грамматики G[\<Def>]   
-![image](https://github.com/M-1liya/wpfCopilator/assets/114402298/c4e1fca6-6707-4ff3-be54-4fd7f0aface4)
+![image](https://github.com/M-1liya/wpfCopilator/assets/114402298/5142a9c9-7395-4060-899d-c31b50015ef1)
+
 
 ### Примеры работы парсера
 Верный ввод:
