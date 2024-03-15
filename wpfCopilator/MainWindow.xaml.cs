@@ -354,7 +354,9 @@ namespace wpfCopilator
         # region Test
         private void button_Play_Click(object sender, RoutedEventArgs e)
         {
-            string pattern = @"String\s+\w+\s*=\s*(?:""\w*""|new\s+String\(\)|new\s+String\(\s*new\s+char\[\]\s*\{\s*('.'\s*,\s*)*'.'\s*\}\s*\)|new\s+String\(\s*new\s+char\[\]\s*\{\s*('.'\s*,\s*)*'.'\s*\}\s*,\s*.\s*,\s*.\s*\))\s*;";
+            //string pattern = @"String\s+\w+\s*=\s*(?:""\w*""|new\s+String\(\)|new\s+String\(\s*new\s+char\[\]\s*\{\s*('.'\s*,\s*)*'.'\s*\}\s*\)|new\s+String\(\s*new\s+char\[\]\s*\{\s*('.'\s*,\s*)*'.'\s*\}\s*,\s*.\s*,\s*.\s*\))\s*;";
+            string pattern = @"finally\s+String\s+\w+\s*=\s*""\s*\w*\s*""\s*;";
+
             TabItem item = mainTabControl.SelectedItem as TabItem;
             TextEditor textBox = item.Content as TextEditor;
             string text = textBox.Text;
@@ -363,9 +365,14 @@ namespace wpfCopilator
 
             foreach (Match match in matches)
             {
+                
                 LogOutputText.Text += "Lexeme found: " + match.Value + "\n";
-                //Console.WriteLine("Lexeme found: " + match.Value);
+                //LogOutputText.Text += "В промежутке: " + match.ValueSpan + "\n";
+                //LogOutputText.Text += match.ValueSpan.ToString() + "\n";
+                foreach (string token in Analyzer.OutputData(Convert.ToString(match.Value)))
+                    LogOutputText.Text += token + "\n";
             }
+            
         }
         private void TabItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {

@@ -240,8 +240,10 @@
             <TabItem Header="Лог">
                 <ListBox Grid.Row="3" Name="lstHistory" Margin="5" DisplayMemberPath="CommandName" FontSize ="{Binding ElementName=sliderScale,Path=Value}"></ListBox>
             </TabItem>
-            <TabItem Name ="LogOutput" Header="Ещё один лог">
-                <TextBlock Name ="LogOutputText"  FontSize ="{Binding ElementName=sliderScale,Path=Value}"></TextBlock>
+            <TabItem Name ="LogOutput" Header="Лаб2">
+                <ScrollViewer>
+                    <TextBlock Name ="LogOutputText"  FontSize ="{Binding ElementName=sliderScale,Path=Value}" TextWrapping="Wrap" ></TextBlock>
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="Таблица" Template="{DynamicResource CloseableTabItem}" Background ="White">
                 <DataGrid AutoGenerateColumns="False" FontSize ="{Binding ElementName=sliderScale,Path=Value}">
