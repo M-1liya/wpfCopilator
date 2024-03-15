@@ -10,10 +10,11 @@
  - Реализовать алгоритм синтаксического анализа с нейтрализацией ошибок (метод Айронса). 
 
 ### Грамматика G[\<Def>]
-![image](https://github.com/M-1liya/wpfCopilator/assets/114402298/75e79fc5-17d7-412f-a8d9-934235c1b304)
+![image](https://github.com/M-1liya/wpfCopilator/assets/114402298/edb58d10-695a-4bb6-b9c2-c82289685e9d)
 
 ### Граф грамматики G[\<Def>]   
-![image](https://github.com/M-1liya/wpfCopilator/assets/114402298/5142a9c9-7395-4060-899d-c31b50015ef1)
+![image](https://github.com/M-1liya/wpfCopilator/assets/114402298/8f0df1bc-7067-4c6b-b11f-6bf3ce310bd8)
+
 
 
 ### Примеры работы парсера
