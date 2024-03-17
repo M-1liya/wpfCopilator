@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Analyzer\**" />
+    <EmbeddedResource Remove="Analyzer\**" />
+    <None Remove="Analyzer\**" />
+    <Page Remove="Analyzer\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Assets\Cancel.png" />
     <None Remove="Assets\Copy.png" />
     <None Remove="Assets\Cut.png" />
@@ -78,10 +85,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LocalizationRes.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Analyzer\" />
   </ItemGroup>
 
 </Project>

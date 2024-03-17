@@ -1,32 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Media;
-using System.Reflection.PortableExecutable;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Ribbon;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
-using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using Microsoft.Win32;
-using static System.Net.Mime.MediaTypeNames;
 using Application = System.Windows.Application;
 using Path = System.IO.Path;
 using LocalizatorHelper;
-using System.Xml.Linq;
 using wpfCopilator.LocalizationResources;
-using System.Text.RegularExpressions;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace wpfCopilator
 {
@@ -354,12 +341,18 @@ namespace wpfCopilator
         # region Test
         private void button_Play_Click(object sender, RoutedEventArgs e)
         {
-            //string pattern = @"String\s+\w+\s*=\s*(?:""\w*""|new\s+String\(\)|new\s+String\(\s*new\s+char\[\]\s*\{\s*('.'\s*,\s*)*'.'\s*\}\s*\)|new\s+String\(\s*new\s+char\[\]\s*\{\s*('.'\s*,\s*)*'.'\s*\}\s*,\s*.\s*,\s*.\s*\))\s*;";
-            string pattern = @"finally\s+String\s+\w+\s*=\s*""\s*\w*\s*""\s*;";
-
+            LogOutputText.Text = string.Empty;
             TabItem item = mainTabControl.SelectedItem as TabItem;
             TextEditor textBox = item.Content as TextEditor;
+            //textBox.TextArea.TextView.LinkTextUnderline = true;
             string text = textBox.Text;
+            foreach (string token in Analyzer.OutputData(Convert.ToString(text)))
+                LogOutputText.Text += token + "\n";
+
+            //string pattern = @"String\s+\w+\s*=\s*(?:""\w*""|new\s+String\(\)|new\s+String\(\s*new\s+char\[\]\s*\{\s*('.'\s*,\s*)*'.'\s*\}\s*\)|new\s+String\(\s*new\s+char\[\]\s*\{\s*('.'\s*,\s*)*'.'\s*\}\s*,\s*.\s*,\s*.\s*\))\s*;";
+            //string pattern = @"finally\s+String\s+\w+\s*=\s*""\s*\w*\s*""\s*;";
+            /*
+            string pattern = @"\s*\w*\s*(finally)\s+\w*\s*(String)\s+\w*\s*\w+\s*\w*\s*\w*\s*(=)\s*\w*\s*(""(\s*\w*\s*)*"")\s*\w*\s*(;)";
             Regex regex = new Regex(pattern);
             MatchCollection matches = regex.Matches(text);
 
@@ -371,8 +364,8 @@ namespace wpfCopilator
                 //LogOutputText.Text += match.ValueSpan.ToString() + "\n";
                 foreach (string token in Analyzer.OutputData(Convert.ToString(match.Value)))
                     LogOutputText.Text += token + "\n";
-            }
-            
+            }*/
+
         }
         private void TabItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
