@@ -16,14 +16,13 @@ namespace wpfCopilator
             @"\s+",
             @"\bfinally\b",
             @"\bString\b",
-            @"\b(?!String|finally|)[a-zA-Z_][a-zA-Z0-9_]*\b",
+            @"\b(?!String|finally)[a-zA-Z_][a-zA-Z0-9_]*\b",
             @"=",
             @"""(\s*\w*)*""",
             @";"
 
         };
-        static public string bigPattern = @"(?:\bfinally\b|\bString\b|(\b(?!String|finally)[a-zA-Z_][a-zA-Z0-9_]*\b)|=|""(\s*\w*)*""|;|\s+)";
-        static List<string> tokens = new List<string>();
+        static public string LexicalAnalyzerPattern = @"(?:\bfinally\b|\bString\b|(\b(?!String|finally)[a-zA-Z_][a-zA-Z0-9_]*\b)|=|""(\s*\w*)*""|;|\s+)";
+        static public string parserPattern = @".*?(?<finally>\bfinally\b).*?(?<String>\bString\b).*?(?<ID>\b(?!String|finally)[a-zA-Z_][a-zA-Z0-9_]*\b).*?(?<AssignmentOperator>=).*?(?<Row>""(\s*\w*\s*)*"").*?(?<EndofOperator>;)";
     }
 }
-// 0 234

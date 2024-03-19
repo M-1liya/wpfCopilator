@@ -14,6 +14,11 @@ using Path = System.IO.Path;
 using LocalizatorHelper;
 using wpfCopilator.LocalizationResources;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
+using System.Collections.ObjectModel;
+using System.DirectoryServices.ActiveDirectory;
+using System.Data;
+using ICSharpCode.AvalonEdit.Rendering;
+using System.Reflection.Metadata;
 
 namespace wpfCopilator
 {
@@ -67,7 +72,7 @@ namespace wpfCopilator
                     VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
                     FontFamily = new FontFamily("Consolas"),
                     ShowLineNumbers = true,
-                    SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("C#")
+                    SyntaxHighlighting = ICSharpCode.AvalonEdit.Highlighting.HighlightingManager.Instance.GetDefinition("Java")
                 }
             });
             TabItem item = mainTabControl.Items[mainTabControl.Items.Count - 1] as TabItem;
@@ -124,7 +129,6 @@ namespace wpfCopilator
             else
                 e.CanExecute = true;
         }
-
         private void CommandNew_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
@@ -344,27 +348,37 @@ namespace wpfCopilator
             LogOutputText.Text = string.Empty;
             TabItem item = mainTabControl.SelectedItem as TabItem;
             TextEditor textBox = item.Content as TextEditor;
-            //textBox.TextArea.TextView.LinkTextUnderline = true;
             string text = textBox.Text;
-            foreach (string token in Analyzer.OutputData(Convert.ToString(text)))
-                LogOutputText.Text += token + "\n";
+            textBox.TextArea.TextView.LineTransformers.Clear();
+
+            { //Лаб 2
+                foreach (string token in LexicalAnalyzer.OutputData(Convert.ToString(text), textBox.Document))
+                    LogOutputText.Text += token + "\n";
+            }
+            { // Лаб 3-4
+                Parser.StartParser(Convert.ToString(text), item.Header.ToString(), textBox.Document);
+                somethingTextBlock.Text = Parser.rightLexeme;
+                if (optionCompCheckBox.IsChecked == false)
+                {
+                    foreach (UnderlineColorizer underline in Parser.colorizers)
+                        textBox.TextArea.TextView.LineTransformers.Add(underline);
+                }
+                else
+                {
+                    Parser.DeleteErrors(textBox.Document);
+                }
+                foreach (string token in Parser.errorStrings)
+                    somethingTextBlock.Text += "\n" + token;
+                ParserOutput.ItemsSource = Parser.data;
+            }
+
 
             //string pattern = @"String\s+\w+\s*=\s*(?:""\w*""|new\s+String\(\)|new\s+String\(\s*new\s+char\[\]\s*\{\s*('.'\s*,\s*)*'.'\s*\}\s*\)|new\s+String\(\s*new\s+char\[\]\s*\{\s*('.'\s*,\s*)*'.'\s*\}\s*,\s*.\s*,\s*.\s*\))\s*;";
             //string pattern = @"finally\s+String\s+\w+\s*=\s*""\s*\w*\s*""\s*;";
             /*
             string pattern = @"\s*\w*\s*(finally)\s+\w*\s*(String)\s+\w*\s*\w+\s*\w*\s*\w*\s*(=)\s*\w*\s*(""(\s*\w*\s*)*"")\s*\w*\s*(;)";
             Regex regex = new Regex(pattern);
-            MatchCollection matches = regex.Matches(text);
-
-            foreach (Match match in matches)
-            {
-                
-                LogOutputText.Text += "Lexeme found: " + match.Value + "\n";
-                //LogOutputText.Text += "В промежутке: " + match.ValueSpan + "\n";
-                //LogOutputText.Text += match.ValueSpan.ToString() + "\n";
-                foreach (string token in Analyzer.OutputData(Convert.ToString(match.Value)))
-                    LogOutputText.Text += token + "\n";
-            }*/
+            MatchCollection matches = regex.Matches(text);*/
 
         }
         private void TabItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)

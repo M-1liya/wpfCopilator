@@ -3,13 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:wpfCopilator" xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit" xmlns:l="clr-namespace:LocalizatorHelper;assembly=LocalizatorHelper"
+        xmlns:local="clr-namespace:wpfCopilator" 
+        xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit" 
+        xmlns:l="clr-namespace:LocalizatorHelper;assembly=LocalizatorHelper"
         mc:Ignorable="d"
         Title="Compiler" Height="450" Width="800" Background="#F2F2F2"
         MinWidth="440" MinHeight="250" Closed="Window_Closed" Closing="Window_Closing"
         Icon="Assets/OIG3.ico" AllowDrop="True">
 
     <Window.Resources>
+        <!--Вкладка -->
         <ControlTemplate TargetType="TabItem" x:Key="CloseableTabItem">
             <Border BorderBrush="#FF270A07" BorderThickness="1"
                     Background="{TemplateBinding Background}" Height="Auto" Width="Auto" >
@@ -39,8 +42,10 @@
                 </StackPanel>
             </Border>
         </ControlTemplate>
+        <!--Локализатор -->
         <l:LocalisationHelper x:Key="helper"></l:LocalisationHelper>
     </Window.Resources>
+    <!--Панель инструментов -->
     <Window.CommandBindings>
         <CommandBinding Command="New" 
                         Executed="CommandNew_Executed"
@@ -66,7 +71,7 @@
 
     </Window.CommandBindings>
 
-
+    <!--Панель инструментов -->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -164,7 +169,7 @@
                 </Button>
 
                 <!-- Кнопки меню "Правка"-->
-                <Button x:Name="button_Cancel" Command = "local:MainWindow.ApplicationUndo" Grid.Column="4" Style="{StaticResource ButtonPanelTool}">
+                <Button x:Name="button_Cancel" Command = "Undo" Grid.Column="4" Style="{StaticResource ButtonPanelTool}">
 
                     <Button.ToolTip>
                         <ToolTip>Отменить (Ctrl+Z)</ToolTip>
@@ -172,7 +177,7 @@
 
                     <Image Source="Assets/Cancel.png" Height="30"/>
                 </Button>
-                <Button x:Name="button_Return" Grid.Column="5" Style="{StaticResource ButtonPanelTool}">
+                <Button x:Name="button_Return" Command ="Redo" Grid.Column="5" Style="{StaticResource ButtonPanelTool}">
 
                     <Button.ToolTip>
                         <ToolTip>Вернуть (Ctrl+Y)</ToolTip>
@@ -237,23 +242,26 @@
 
         <TabControl Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="4" Name ="testtabControl">
            <!-- <TabItem MouseDoubleClick="TabItem_MouseDoubleClick" Tag="1" Style="{DynamicResource TabItemStyle}"/>-->
-            <TabItem Header="Лог">
-                <ListBox Grid.Row="3" Name="lstHistory" Margin="5" DisplayMemberPath="CommandName" FontSize ="{Binding ElementName=sliderScale,Path=Value}"></ListBox>
-            </TabItem>
-            <TabItem Name ="LogOutput" Header="Лаб2">
+            <TabItem Name ="LogOutput" Header="Синтаксический анализатор">
                 <ScrollViewer>
                     <TextBlock Name ="LogOutputText"  FontSize ="{Binding ElementName=sliderScale,Path=Value}" TextWrapping="Wrap" ></TextBlock>
                 </ScrollViewer>
             </TabItem>
-            <TabItem Header="Таблица" Template="{DynamicResource CloseableTabItem}" Background ="White">
-                <DataGrid AutoGenerateColumns="False" FontSize ="{Binding ElementName=sliderScale,Path=Value}">
+            <TabItem Header="Лексический анализатор">
+                <DataGrid Name="ParserOutput" AutoGenerateColumns="False" CanUserResizeColumns="True" CanUserAddRows ="False"  ItemsSource="{Binding ElementName=Parser}"  FontSize ="{Binding ElementName=sliderScale,Path=Value}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Width="300" Header="File Path"/>
-                        <DataGridTextColumn Header="Line"/>
-                        <DataGridTextColumn Header="Column"/>
-                        <DataGridTextColumn Width="*"  Header="Message"/>
+                        <DataGridTextColumn Width="4*"  Header="FileName" Binding="{Binding FileName}"/>
+                        <DataGridTextColumn Width="2*"  Header="Line" Binding="{Binding Line}"/>
+                        <DataGridTextColumn Width="2*"  Header="Column" Binding="{Binding Column}"/>
+                        <DataGridTextColumn Width="10*" Header="Message" Binding="{Binding Message}"/>
                     </DataGrid.Columns>
                 </DataGrid>
+            </TabItem>
+            <TabItem Header="Что-то с чем-то">
+                <TextBlock Name ="somethingTextBlock"  FontSize ="{Binding ElementName=sliderScale,Path=Value}" TextWrapping="Wrap" ></TextBlock>
+            </TabItem>
+            <TabItem Header="История операций">
+                <ListBox Grid.Row="3" Name="lstHistory" Margin="5" DisplayMemberPath="CommandName" FontSize ="{Binding ElementName=sliderScale,Path=Value}"></ListBox>
             </TabItem>
         </TabControl>
 
@@ -276,6 +284,7 @@
                 <ComboBoxItem Tag="8">RUS</ComboBoxItem>
                 <ComboBoxItem Tag="10">ENG</ComboBoxItem>
             </ComboBox>
+            <CheckBox Name="optionCompCheckBox">Улучшенный режим</CheckBox>
 
         </StatusBar>
     </Grid>
