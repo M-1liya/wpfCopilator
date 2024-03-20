@@ -19,6 +19,7 @@ using System.DirectoryServices.ActiveDirectory;
 using System.Data;
 using ICSharpCode.AvalonEdit.Rendering;
 using System.Reflection.Metadata;
+using System.Diagnostics;
 
 namespace wpfCopilator
 {
@@ -342,7 +343,6 @@ namespace wpfCopilator
             changeItem.Background = Brushes.Gray;
         }
         #endregion
-        # region Test
         private void button_Play_Click(object sender, RoutedEventArgs e)
         {
             LogOutputText.Text = string.Empty;
@@ -381,13 +381,6 @@ namespace wpfCopilator
             MatchCollection matches = regex.Matches(text);*/
 
         }
-        private void TabItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        #endregion
-
         private void comboBoxLocalization_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox? comboBox = sender as ComboBox;
@@ -401,6 +394,12 @@ namespace wpfCopilator
                     ResourceManagerService.ChangeLocale("en-US");
                     break;
             }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var url = "https://github.com/M-1liya/wpfCopilator/tree/AlexPetushkovTree";
+            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
         }
     }
 }

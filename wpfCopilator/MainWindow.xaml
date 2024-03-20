@@ -107,14 +107,14 @@
                 <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.SELECTALL]}" Command="SelectAll"/>
             </MenuItem>
             <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.TEXT]}">
-                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.PROBLEMSTATEMENT]}"/>
-                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.GRAMMAR]}"/>
-                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.GRAMMARSETTING]}"/>
-                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.ANALYSISMETHOD]}"/>
-                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.DIAGNOSISANDNEUTRALIZATIONOFERRORS]}"/>
-                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.TESTCASE]}"/>
-                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.REFERENCE]}"/>
-                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.PROGRAMSOURCECODE]}"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.PROBLEMSTATEMENT]}" Click="MenuItem_Click"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.GRAMMAR]}" Click="MenuItem_Click"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.GRAMMARSETTING]}" Click="MenuItem_Click"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.ANALYSISMETHOD]}" Click="MenuItem_Click"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.DIAGNOSISANDNEUTRALIZATIONOFERRORS]}" Click="MenuItem_Click"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.TESTCASE]}" Click="MenuItem_Click"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.REFERENCE]}" Click="MenuItem_Click"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.PROGRAMSOURCECODE]}" Click="MenuItem_Click"/>
             </MenuItem>
 
             <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.START]}"/>

@@ -64,7 +64,7 @@ namespace wpfCopilator
         {
             switch (token)
             {
-                case "finally":
+                case "final":
                     outputInfoLexeme.Add(String.Format("1 - ключевое слово - {0} - c {1} по {2} символ", token, startEnd.Item1, startEnd.Item2));
                     break;
                 case "String":
