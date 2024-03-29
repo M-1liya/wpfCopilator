@@ -98,7 +98,7 @@
                 <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.SELECTALL]}" Command="SelectAll"/>
             </MenuItem>
             <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.TEXT]}">
-                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.PROBLEMSTATEMENT]}"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.PROBLEMSTATEMENT]}" Click="Click_ProblemStatement"/>
                 <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.GRAMMAR]}"/>
                 <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.GRAMMARSETTING]}"/>
                 <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.ANALYSISMETHOD]}"/>

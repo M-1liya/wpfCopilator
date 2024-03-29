@@ -436,5 +436,12 @@ namespace wpfCopilator
 
             ( (TabItem)mainTabControl.SelectedItem ).Background = Brushes.White;
         }
+
+        private void Click_ProblemStatement(object sender, RoutedEventArgs e)
+        {
+            ManualText manualText = new ManualText();
+
+            manualText.Show();
+        }
     }
 }
