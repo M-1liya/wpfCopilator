@@ -439,7 +439,22 @@ namespace wpfCopilator
 
         private void Click_ProblemStatement(object sender, RoutedEventArgs e)
         {
-            ManualText manualText = new ManualText();
+            ManualText manualText;
+
+            switch (comboBoxLocalization.Text)
+            {
+                case "RUS":
+                    manualText = new ManualText(TextPages.TextPage.FormulationProblem, LocalizationResources.Localization.RU);
+                    break;
+
+                case "ENG":
+                    manualText = new ManualText(TextPages.TextPage.FormulationProblem, LocalizationResources.Localization.EN);
+                    break;
+
+                default:
+                    manualText = new ManualText(TextPages.TextPage.FormulationProblem, LocalizationResources.Localization.EN);
+                    break;
+            }            
 
             manualText.Show();
         }

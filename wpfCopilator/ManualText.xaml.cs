@@ -1,18 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.TextFormatting;
-using System.Windows.Shapes;
-using wpfCopilator.ManualPages;
 using wpfCopilator.TextPages;
 
 namespace wpfCopilator
@@ -22,6 +11,7 @@ namespace wpfCopilator
     /// </summary>
     public partial class ManualText : Window
     {
+        private LocalizationResources.Localization localization;
         private Button? _previousButton = null;
         private List<Page> _pages = new List<Page>()
         {
@@ -34,13 +24,40 @@ namespace wpfCopilator
             new Bibliography(),
             new ProgramSourceCode()
         };
-        public ManualText(TextPage textPage)
-            :base()
-        {
 
+        public ManualText(TextPage textPage, LocalizationResources.Localization localization)
+            :this()
+        {
+            _changeLocalization(localization);
+
+            _pages = new List<Page>()
+            {
+                new FormulationProblem() {Localization = localization },
+                new Grammar() {Localization = localization },
+                new ClassificationGrammar() {Localization = localization },
+                new MethodAnalysis() {Localization = localization },
+                new DiagnosticsAndNeutralizationErrors() {Localization = localization },
+                new TestCase() {Localization = localization },
+                new Bibliography() {Localization = localization },
+                new ProgramSourceCode() {Localization = localization }
+            };
+
+            
+            switch (textPage)
+            {
+                case TextPage.FormulationProblem: _navigateFrame<FormulationProblem>(); break;
+                case TextPage.Grammar: _navigateFrame<Grammar>(); break;
+                case TextPage.ClassificationGrammar: _navigateFrame<ClassificationGrammar>(); break;
+                case TextPage.MethodAnalysis: _navigateFrame<MethodAnalysis>(); break;
+                case TextPage.DiagnosticsAndNeutralizationErrors: _navigateFrame<DiagnosticsAndNeutralizationErrors>(); break;
+                case TextPage.TestCase: _navigateFrame<TestCase>(); break;
+                case TextPage.Bibliography: _navigateFrame<Bibliography>(); break;
+                case TextPage.ProgramSourceCode: _navigateFrame<ProgramSourceCode>(); break;
+                default: throw new Exception($"There is no {textPage}");
+            }
         }
 
-        public ManualText()
+        private ManualText()
         {
             InitializeComponent();
 
@@ -88,9 +105,39 @@ namespace wpfCopilator
             {
                 if (page is T)
                 {
+                    
                     ContentFrame.Navigate(page);
                     break;
                 }
+            }
+        }
+        private void _changeLocalization(LocalizationResources.Localization localization)
+        {
+            this.localization = localization;
+            switch (localization) 
+            {
+                case LocalizationResources.Localization.EN:
+                    button_FormulationProblem.Content = "Problem statement";
+                    button_Grammar.Content = "Grammar";
+                    button_ClassificationGrammar.Content = "Grammar setting";
+                    button_MethodAnalysis.Content = "Analysis method";
+                    button_DiagnosticsAndNeutralizationErrors.Content = "Diagnostics and neutralization errors";
+                    button_TestCase.Content = "Test case";
+                    button_Bibliography.Content = "Reference";
+                    button_ProgramSourceCode.Content = "Program source code";
+
+                    this.Title = "Manual text";
+                    break;
+
+
+                case LocalizationResources.Localization.RU:
+
+                    break;
+
+
+                default:
+                    _changeLocalization(LocalizationResources.Localization.EN);
+                    break;
             }
         }
     }

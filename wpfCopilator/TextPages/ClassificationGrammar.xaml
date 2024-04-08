@@ -9,6 +9,12 @@
       Title="ClassificationGrammar">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="title" Grid.Row="0" FontSize="18" HorizontalAlignment="Center"/>
+        <AccessText x:Name="ContentLabel" Grid.Row="1" FontSize="14" TextWrapping="WrapWithOverflow"/>
     </Grid>
 </Page>
