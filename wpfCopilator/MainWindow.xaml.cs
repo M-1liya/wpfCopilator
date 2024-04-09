@@ -238,17 +238,11 @@ namespace wpfCopilator
         }
         private void Window_Closed(object sender, EventArgs e)
         {
-            DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory + "//" + "tempFilesDirectory//");
-            foreach (FileInfo file in di.GetFiles())
-            {
-                file.Delete();
-            }
 
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory + "//" + "tempFilesDirectory//");
-
+           
             int count = 0;
             foreach (TabItem item in mainTabControl.Items)
             {
@@ -256,11 +250,7 @@ namespace wpfCopilator
                 if (item.Header.ToString().Contains('*'))
                     count++;
             }
-            int i = 0;
-            foreach (FileInfo file in di.GetFiles())
-            {
-                i++;
-            }
+
             if (count != 0)
             {
                 MessageBoxResult messageResult = MessageBox.Show("У вас " + count + " несохраненных файлов, вы хотите их сохранить?",

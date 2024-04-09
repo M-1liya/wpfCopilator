@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="Compiler" Height="600" Width="900" Background="#F2F2F2"
         MinWidth="440" MinHeight="250" Closed="Window_Closed" Closing="Window_Closing"
-        Icon="Assets/OIG3.ico" AllowDrop="True"
-        >
+        Icon="/Assets/OIG3.ico" 
+        AllowDrop="True" >
 
     <Window.Resources>
         <ControlTemplate TargetType="TabItem" x:Key="CloseableTabItem">
