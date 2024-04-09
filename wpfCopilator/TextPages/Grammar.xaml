@@ -8,13 +8,17 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Grammar">
 
+    <ScrollViewer>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <Label x:Name="title" Grid.Row="0" FontSize="18" HorizontalAlignment="Center"/>
-        <AccessText x:Name="ContentLabel" Grid.Row="1" FontSize="14" TextWrapping="WrapWithOverflow"/>
-    </Grid>
+            <AccessText x:Name="ContentLabel" Grid.Row="1" FontSize="14" TextWrapping="WrapWithOverflow" Margin="15,0,10,0"/>
+            <Image Grid.Row="2" Source="assets/avtomat.jpg" Width="500" HorizontalAlignment="Left" Margin="15,0,0,15"/>
+        </Grid>
+    </ScrollViewer>
 </Page>

@@ -27,13 +27,39 @@ namespace wpfCopilator.TextPages
                 switch (value)
                 {
                     case LocalizationResources.Localization.EN:
-                        title.Content = "Problem statement";
-                        ContentLabel.Text = "In Java, Enumerations or Java Enum serve the purpose of representing a group of named constants in a programming language. Java Enums are used when we know all possible values at compile time, such as choices on a menu, rounding modes, command-line flags, etc. The set of constants in an enum type doesn’t need to stay fixed for all time.\r\n\r\nWhat is Enumeration or Enum in Java?\r\nA Java enumeration is a class type. Although we don’t need to instantiate an enum using new, it has the same capabilities as other classes. This fact makes Java enumeration a very powerful tool. Just like classes, you can give them constructors, add instance variables and methods, and even implement interfaces.";
-                        break;
+                        title.Content = "Classification grammar";
+                        ContentLabel.Text =
+@"
+According to Chomsky's classification, the grammar G[‹DEF›] is considered to be automaton-based.
+Rules (1)-(7) belong to the class of right-recursive productions (A → aB | a | ε).
+
+    1) <Def> 	-> 'enum'<SPACE>
+    2) <SPACE>	-> '_'<ID>
+    3) <ID> 	-> (letter | _ )<IDRem>
+    4) <IDRem>	-> (letter | _ | digit)<IDRem>
+    5) <IDRem>	-> '{' <ENUMER>
+    6) <ENUMER>	-> UppercaseLetter <ENUMER> | UppercaseLetter <ENUMERend>
+    7) <ENUMERend>	-> ','<ENUMER> | ';''}'
+
+";
+                            break;
 
                     case LocalizationResources.Localization.RU:
-                        title.Content = "Постановка задачи";
-                        ContentLabel.Text = "В Java, Перечисления или Java Enum служат для представления группы именованных констант в языке программирования. Перечисления Java используются, когда мы знаем все возможные значения во время компиляции, такие как варианты выбора в меню, режимы округления, флаги командной строки и т.д. Набор констант в типе enum не обязательно должен оставаться фиксированным на все время.\r\n\r\nЧто такое перечисление в Java?\r\nПеречисление Java - это тип класса. Хотя нам не нужно создавать экземпляр enum с помощью новое, он обладает теми же возможностями, что и другие классы. Этот факт делает Java enumeration очень мощным инструментом. Точно так же, как классам, вы можете присваивать им конструкторы, добавлять переменные и методы экземпляра и даже реализовывать интерфейсы.";
+                        title.Content = "Классификация грамматики";
+                        ContentLabel.Text =
+@"
+Согласно классификации Хомского, грамматика G[‹DEF›] является автоматной.
+Правила (1)-(7) относятся к классу праворекурсивных продукций (A → aB | a | ε):
+
+    1) <Def> 	-> 'enum'<SPACE>
+    2) <SPACE>	-> '_'<ID>
+    3) <ID> 	-> (letter | _ )<IDRem>
+    4) <IDRem>	-> (letter | _ | digit)<IDRem>
+    5) <IDRem>	-> '{' <ENUMER>
+    6) <ENUMER>	-> UppercaseLetter <ENUMER> | UppercaseLetter <ENUMERend>
+    7) <ENUMERend>	-> ','<ENUMER> | ';''}'
+
+";
                         break;
 
                     default:

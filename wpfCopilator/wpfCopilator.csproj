@@ -25,6 +25,9 @@
     <None Remove="ManualPages\ManualAssets\CreateNewFile.png" />
     <None Remove="ManualPages\ManualAssets\MenuEdit.png" />
     <None Remove="ManualPages\ManualAssets\PanelTool.png" />
+    <None Remove="TextPages\assets\1.jpg" />
+    <None Remove="TextPages\assets\2.jpg" />
+    <None Remove="TextPages\assets\avtomat.jpg" />
   </ItemGroup>
 
 
@@ -55,6 +58,9 @@
     <Resource Include="ManualPages\ManualAssets\CreateNewFile.png" />
     <Resource Include="ManualPages\ManualAssets\MenuEdit.png" />
     <Resource Include="ManualPages\ManualAssets\PanelTool.png" />
+    <Resource Include="TextPages\assets\1.jpg" />
+    <Resource Include="TextPages\assets\2.jpg" />
+    <Resource Include="TextPages\assets\avtomat.jpg" />
   </ItemGroup>
 
   <ItemGroup>

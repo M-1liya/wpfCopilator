@@ -8,13 +8,21 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ProgramSourceCode">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-        <Label x:Name="title" Grid.Row="0" FontSize="18" HorizontalAlignment="Center"/>
-        <AccessText x:Name="ContentLabel" Grid.Row="1" FontSize="14" TextWrapping="WrapWithOverflow"/>
-    </Grid>
+            <Label x:Name="title" Grid.Row="0" FontSize="18" HorizontalAlignment="Center"/>
+            <AccessText x:Name="ContentLabel" Grid.Row="1" FontSize="14" TextWrapping="WrapWithOverflow" Margin="15,0,10,0"/>
+            <TextBlock Grid.Row="2" Margin="17,0,10,0">
+                    <Hyperlink NavigateUri="https://github.com/M-1liya/wpfCopilator/tree/EnumAnalyzer" RequestNavigate="Hyperlink_RequestNavigate">
+                        https://github.com/M-1liya/wpfCopilator/tree/EnumAnalyzer
+                    </Hyperlink>
+                </TextBlock>
+        </Grid>
+    </ScrollViewer>
 </Page>
