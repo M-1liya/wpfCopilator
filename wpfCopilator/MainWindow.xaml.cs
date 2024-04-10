@@ -361,7 +361,7 @@ namespace wpfCopilator
 
 
             List<Token> tokens = await Task.Run(() => EnumAnalyzer.AnalyzeAsync(text));//Вызов Анализатора
-            (List<Token> result, List<Token> errors) parsedTokens = await Task.Run(() =>  Grammatic.Parse(tokens));//Вызов парсера
+            (List<Token> result, List<Token> errors) parsedTokens = await Task.Run(() =>  Grammatic.ParsePOLIZ(tokens));//Вызов парсера
 
             
             _updateErrorDataGrid(tokens, _selectedItem.Tag.ToString());

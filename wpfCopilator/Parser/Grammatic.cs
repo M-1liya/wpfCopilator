@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -100,6 +101,98 @@ namespace wpfCopilator.Parser
                 return true;
             else
                 return false;
+        }
+
+        public static (List<Token> result, List<Token> errors) ParsePOLIZ(List<Token> stack1)
+        {
+            List <Token> tokens = POLIZ(stack1);
+            int  iterator = 0;
+
+            while (tokens.Count > 1)
+            {
+                if (tokens[iterator].Type.Name == TokenTypes.Operation)
+                {
+                    float.TryParse(tokens[iterator - 2].Text, out float a);
+                    float.TryParse(tokens[iterator - 1].Text, out float b);
+
+                    switch (tokens[iterator].Text)
+                    {
+                        case "+": b = a + b; break;
+                        case "-": b = a - b; break;
+                        case "*": b = a * b; break;
+                        case "/": b = a / b; break;
+                        default:
+                            throw new Exception("Неизвестная операция:" + tokens[iterator].Text);
+                    }
+
+                    tokens[iterator - 2].Text = b.ToString();
+                    tokens.RemoveRange(iterator - 1, 2);
+
+                    iterator = 0;
+                }
+                else
+                    iterator++;
+
+            }
+            return (tokens, new List<Token>());
+        }
+        public static List<Token>  POLIZ(List<Token> stack1)
+        {
+            List<Token> stack2 = new List<Token>();
+            List<TokenPoliz> stack3 = new List<TokenPoliz>();
+
+            foreach(Token token in stack1)
+            {
+                switch(token.Type.Name)
+                {
+                    case TokenTypes.Operand:
+                        stack2.Add(token);
+                        break;
+
+                    case TokenTypes.LPar: 
+                        
+                        stack3.Insert(0, new TokenPoliz(token, 0));
+                        break;
+
+                    case TokenTypes.RPar:
+
+                        TokenPoliz rpar = new TokenPoliz(token, 1);
+                        process(stack2, stack3, rpar);
+                        break;
+
+                    case TokenTypes.Operation:
+
+                        TokenPoliz oper;
+
+                        if (token.Text == "+" || token.Text == "-") 
+                            oper = new TokenPoliz(token, 2);
+                        else if (token.Text == "*" || token.Text == "/")
+                            oper = new TokenPoliz(token, 3);
+                        else
+                            throw new Exception("Не определен прироритет для данной операции:" +  token.Text);
+
+                        process(stack2, stack3, oper);
+                        break;
+
+                }
+            }
+
+            foreach (TokenPoliz token in stack3)
+                if(token.Token.Type.Name == TokenTypes.Operation)
+                    stack2.Add(token.Token);
+
+            return stack2;
+        }
+
+        private static void process(List<Token> stack2, List<TokenPoliz> stack3, TokenPoliz token)
+        {
+            while (stack3.Count != 0 && stack3[0].Priority >= token.Priority)
+            {
+                stack2.Add(stack3[0].Token);
+                stack3.RemoveAt(0);
+            }
+
+            stack3.Insert(0, token);
         }
 
 

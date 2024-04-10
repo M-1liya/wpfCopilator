@@ -31,14 +31,10 @@ namespace wpfCopilator.Analyzer
 
         static private List<TokenType> _tokens = new List<TokenType>()
         {
-            new TokenType(11, TokenTypes.Enumeration, @"[A-Z]+\b"),
-            new TokenType(12, TokenTypes.KeyWord, @"enum\b"),
-            new TokenType(13, TokenTypes.ID, @"[a-zA-Z_][a-zA-Z0-9_]*\b"),
-            new TokenType(24, TokenTypes.Space, @"[ \t\n\r]+"),
-            new TokenType(35, TokenTypes.Сomma, @","),
-            new TokenType(46, TokenTypes.LPar, @"{"),
-            new TokenType(57, TokenTypes.RPar, @"}"),
-            new TokenType(68, TokenTypes.Semicolon, @";")
+            new TokenType(11, TokenTypes.Operand, @"[0-9]+"),
+            new TokenType(12, TokenTypes.Operation, @"[+\-\*\/]"),
+            new TokenType(46, TokenTypes.LPar, @"\("),
+            new TokenType(57, TokenTypes.RPar, @"\)"),
         };
 
         static public ReadOnlyCollection<TokenType> Tokens => _tokens.AsReadOnly<TokenType>();
@@ -46,8 +42,10 @@ namespace wpfCopilator.Analyzer
 
         public enum TokenTypes
         {
-            Enumeration,
             KeyWord,
+            Enumeration,
+            Operand,
+            Operation,
             ID,
             Space,
             Сomma,
