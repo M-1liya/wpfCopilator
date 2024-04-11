@@ -33,7 +33,7 @@ namespace wpfCopilator.TextPages
 Grammar G[<Def>]:
 
 1. `<Def>` -> 'enum' `<SPACE>`
-2. `<SPACE>` -> '_' `<ID>`
+2. `<SPACE>` -> `__` `<ID>`
 3. `<ID>` -> (letter | _ ) `<IDRem>`
 4. `<IDRem>` -> (letter | _ | digit) `<IDRem>`
 5. `<IDRem>` -> '{' `<ENUMER>`
@@ -60,7 +60,7 @@ Following the provided formal grammar definition, let's represent G[‹DEF›] i
 @" Грамматика G[<Def>]:
 
 1) <Def> 	-> 'enum'<SPACE>
-2) <SPACE>	-> '_'<ID>
+2) <SPACE>	-> `__` <ID>
 3) <ID> 	-> (letter | _ )<IDRem>
 4) <IDRem>	-> (letter | _ | digit)<IDRem>
 5) <IDRem>	-> '{' <ENUMER>

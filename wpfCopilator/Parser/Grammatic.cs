@@ -51,6 +51,7 @@ namespace wpfCopilator.Parser
                         else
                         {
                             errors.Add(tokens[t]);
+                            p++;
                             continue;
                         }
                         break;
