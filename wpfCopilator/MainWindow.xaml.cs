@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using wpfCopilator.Parser;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using wpfCopilator.TextPages;
 
 namespace wpfCopilator
 {
@@ -428,26 +429,46 @@ namespace wpfCopilator
             ( (TabItem)mainTabControl.SelectedItem ).Background = Brushes.White;
         }
 
-        private void Click_ProblemStatement(object sender, RoutedEventArgs e)
+        #region ClickText
+
+        private void Click_ProblemStatement(object sender, RoutedEventArgs e) => Click_MenuItemText(TextPages.TextPage.FormulationProblem);
+        private void Click_Grammar(object sender, RoutedEventArgs e) => Click_MenuItemText(TextPages.TextPage.Grammar);
+        private void Click_ClassificationGrammar(object sender, RoutedEventArgs e) => Click_MenuItemText(TextPage.ClassificationGrammar);
+        private void Click_MethodAnalysis(object sender, RoutedEventArgs e) => Click_MenuItemText(TextPage.MethodAnalysis);
+        private void Click_Diagnostic(object sender, RoutedEventArgs e) => Click_MenuItemText(TextPage.DiagnosticsAndNeutralizationErrors);
+        private void Click_TestCase(object sender, RoutedEventArgs e) => Click_MenuItemText(TextPage.TestCase);
+        private void Click_Reference(object sender, RoutedEventArgs e) => Click_MenuItemText(TextPage.Bibliography);
+        private void Click_ProgramSourceCode(object sender, RoutedEventArgs e) => Click_MenuItemText(TextPage.ProgramSourceCode);
+
+
+
+        private void Click_MenuItemText(TextPages.TextPage textPage)
         {
             ManualText manualText;
+            LocalizationResources.Localization localization;
 
             switch (comboBoxLocalization.Text)
             {
                 case "RUS":
-                    manualText = new ManualText(TextPages.TextPage.FormulationProblem, LocalizationResources.Localization.RU);
+                    localization = LocalizationResources.Localization.RU;
                     break;
 
                 case "ENG":
-                    manualText = new ManualText(TextPages.TextPage.FormulationProblem, LocalizationResources.Localization.EN);
+                    localization = LocalizationResources.Localization.EN;
                     break;
 
                 default:
-                    manualText = new ManualText(TextPages.TextPage.FormulationProblem, LocalizationResources.Localization.EN);
+                    localization = LocalizationResources.Localization.EN;
                     break;
-            }            
+            }
 
+            manualText = new ManualText(textPage, localization);
             manualText.Show();
         }
+
+
+        #endregion
+
+
     }
 }
