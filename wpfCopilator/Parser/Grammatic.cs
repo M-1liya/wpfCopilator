@@ -105,7 +105,13 @@ namespace wpfCopilator.Parser
 
         public static (List<Token> result, string expression) ParsePOLIZ(List<Token> stack1)
         {
-            List <Token> tokens = POLIZ(stack1);
+            (List<Token> tokens, string error) = RecursiveDescentParser(stack1);
+
+            if (error != string.Empty)
+                return (tokens, error);
+
+            tokens = POLIZ(tokens);
+
             string expr = "";
             tokens.ForEach(t => expr += t.Text);
             int  iterator = 0;
@@ -176,6 +182,8 @@ namespace wpfCopilator.Parser
                         process(stack2, stack3, oper);
                         break;
 
+                    default:
+                        break;
                 }
             }
 
@@ -188,15 +196,149 @@ namespace wpfCopilator.Parser
 
         private static void process(List<Token> stack2, List<TokenPoliz> stack3, TokenPoliz token)
         {
-            while (stack3.Count != 0 && stack3[0].Priority >= token.Priority)
+            while (stack3.Count != 0 && (stack3[0].Priority >= token.Priority || (stack3[0].Token.Type.Name == TokenTypes.LPar && token.Token.Type.Name == TokenTypes.RPar)))
             {
-                stack2.Add(stack3[0].Token);
+                if (stack3[0].Token.Type.Name == TokenTypes.Operation)
+                    stack2.Add(stack3[0].Token);
                 stack3.RemoveAt(0);
             }
 
-            stack3.Insert(0, token);
+            if(token.Priority != 1)
+                stack3.Insert(0, token);
         }
 
+
+
+        private static (List<Token> result, string error) RecursiveDescentParser(List<Token> tokens)
+        {
+            List<Token> stack = new List<Token>();
+            string error = string.Empty;
+
+            foreach (Token token in tokens)
+            {
+                if (token.Type.Name == TokenTypes.Space || token.Type.Name == TokenTypes.Error)
+                    continue;
+                else
+                    stack.Add(token);
+            }
+
+            int pos = 0; // индекс текущего токена
+            try
+            {
+                parse();
+            }
+            catch (Exception e)
+            {
+                error = e.Message;
+            }
+
+            return (stack, error);
+
+            List<Token> parse()
+            {
+                List<Token> result = expression();
+                if (pos != stack.Count)
+                {
+                    throw new Exception("Error in expression at " + tokens[pos].Text);
+                }
+                return result;
+            }
+
+            // E -> T±T±T±T± ... ±T
+            List<Token> expression()
+            {
+                // находим первое слагаемое
+                List<Token> first = term();
+
+                while (pos < stack.Count)
+                {
+                    string _operator = stack[pos].Text;
+
+                    if (_operator != "+" && _operator != "-")
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        first.Add(stack[pos]);
+                        pos++;
+                    }
+
+                    // находим второе слагаемое (вычитаемое)
+                    List<Token> second = term();
+
+                    first.AddRange(second);
+                }
+                return first;
+            }
+
+            // T -> F*/F*/F*/*/ ... */F
+            List<Token> term()
+            {
+                // находим первый множитель
+                List<Token> first = factor();
+
+                while (pos < stack.Count)
+                {
+                    string _operator = stack[pos].Text;
+                    if (_operator != "*" && _operator != "/")
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        first.Add(stack[pos]);
+                        pos++;
+                    }
+
+                    // находим второй множитель (делитель)
+                    List<Token> second = factor();
+
+                    first.AddRange(second);
+                }
+                return first;
+            }
+
+            // F -> N | (E)
+            List<Token> factor()
+            {
+
+                string next = stack[pos].Text;
+                List<Token> result = new();
+                if (next == "(")
+                {
+                    result.Add(stack[pos]);
+                    pos++;
+
+                    // если выражение в скобках, то рекурсивно переходим на обработку подвыражения типа Е
+                    result.AddRange(expression());
+
+                    string closingBracket;
+
+                    if (pos < stack.Count)
+                    {
+                        closingBracket = stack[pos].Text;
+                    }
+                    else
+                    {
+                        throw new Exception("Unexpected end of expression");
+                    }
+
+                    if (pos < tokens.Count && closingBracket == ")")
+                    {
+                        result.Add(stack[pos]);
+                        pos++;
+                        return result;
+                    }
+                    throw new Exception("')' expected but " + closingBracket);
+                }
+                result.Add(stack[pos]);
+                pos++;
+                // в противном случае токен должен быть числом
+                return result;
+            }
+
+        }
 
     }
 

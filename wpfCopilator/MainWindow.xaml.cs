@@ -361,20 +361,6 @@ namespace wpfCopilator
 
 
             List<Token> tokens = await Task.Run(() => EnumAnalyzer.AnalyzeAsync(text));//Вызов Анализатора
-            for(int i = 0; i < tokens.Count - 1; i++)
-            {
-                if(tokens[i].Type.Name == TokenType.TokenTypes.Operation && tokens[i + 1].Type.Name == TokenType.TokenTypes.Operation)
-                {
-                    MessageBox.Show("error");
-                    return;
-                }
-                if (tokens[i].Type.Name == TokenType.TokenTypes.LPar && tokens[i + 1].Type.Name == TokenType.TokenTypes.Operation)
-                {
-                    MessageBox.Show("error");
-                    return;
-                }
-            }
-
             (List<Token> result, string expr) parsedTokens = await Task.Run(() =>  Grammatic.ParsePOLIZ(tokens));//Вызов парсера
 
             

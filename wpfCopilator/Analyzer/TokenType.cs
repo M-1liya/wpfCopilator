@@ -35,6 +35,7 @@ namespace wpfCopilator.Analyzer
             new TokenType(12, TokenTypes.Operation, @"[+\-\*\/]"),
             new TokenType(46, TokenTypes.LPar, @"\("),
             new TokenType(57, TokenTypes.RPar, @"\)"),
+            new TokenType(24, TokenTypes.Space, @"[ \t\n\r]+"),
         };
 
         static public ReadOnlyCollection<TokenType> Tokens => _tokens.AsReadOnly<TokenType>();
