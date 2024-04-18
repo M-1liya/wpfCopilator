@@ -361,7 +361,21 @@ namespace wpfCopilator
 
 
             List<Token> tokens = await Task.Run(() => EnumAnalyzer.AnalyzeAsync(text));//Вызов Анализатора
-            (List<Token> result, List<Token> errors) parsedTokens = await Task.Run(() =>  Grammatic.ParsePOLIZ(tokens));//Вызов парсера
+            for(int i = 0; i < tokens.Count - 1; i++)
+            {
+                if(tokens[i].Type.Name == TokenType.TokenTypes.Operation && tokens[i + 1].Type.Name == TokenType.TokenTypes.Operation)
+                {
+                    MessageBox.Show("error");
+                    return;
+                }
+                if (tokens[i].Type.Name == TokenType.TokenTypes.LPar && tokens[i + 1].Type.Name == TokenType.TokenTypes.Operation)
+                {
+                    MessageBox.Show("error");
+                    return;
+                }
+            }
+
+            (List<Token> result, string expr) parsedTokens = await Task.Run(() =>  Grammatic.ParsePOLIZ(tokens));//Вызов парсера
 
             
             _updateErrorDataGrid(tokens, _selectedItem.Tag.ToString());
@@ -370,8 +384,8 @@ namespace wpfCopilator
             tE.Text = "";
             parsedTokens.result.ForEach(token => { tE.Text += token.Text; } );              
 
-            tE.Text += "\nErrors:\n";
-            parsedTokens.errors.ForEach(token => { tE.Text += token.ToString() + "\n"; } );
+            tE.Text += "\nPOLIZ:\n" + parsedTokens.expr;
+            
 
             this.Cursor = Cursors.Arrow;
         }

@@ -75,4 +75,35 @@ namespace wpfCopilator.Parser
 
         public List<object[]> ProductsList => _products;
     }
+
+    public class Num : IRule
+    {
+        /// <summary>
+        /// Начальный нетерминальный символ Е
+        /// </summary>
+        public Num() { }
+        
+        private static List<object[]> _products = new List<object[]>()
+        {
+            new object[] {TokenTypes.Operation,  new ID()},
+            new object[] {}
+        };
+
+        public List<object[]> ProductsList => _products;
+    }
+
+    public class Op : IRule
+    {
+        /// <summary>
+        /// Начальный нетерминальный символ Е
+        /// </summary>
+        public Op() { }
+
+        private static List<object[]> _products = new List<object[]>()
+        {
+            new object[] {TokenTypes.Operand,  new Num()}
+        };
+
+        public List<object[]> ProductsList => _products;
+    }
 }

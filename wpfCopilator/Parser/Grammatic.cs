@@ -103,9 +103,11 @@ namespace wpfCopilator.Parser
                 return false;
         }
 
-        public static (List<Token> result, List<Token> errors) ParsePOLIZ(List<Token> stack1)
+        public static (List<Token> result, string expression) ParsePOLIZ(List<Token> stack1)
         {
             List <Token> tokens = POLIZ(stack1);
+            string expr = "";
+            tokens.ForEach(t => expr += t.Text);
             int  iterator = 0;
 
             while (tokens.Count > 1)
@@ -134,7 +136,7 @@ namespace wpfCopilator.Parser
                     iterator++;
 
             }
-            return (tokens, new List<Token>());
+            return (tokens, expr);
         }
         public static List<Token>  POLIZ(List<Token> stack1)
         {
