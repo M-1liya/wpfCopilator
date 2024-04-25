@@ -18,6 +18,7 @@ using wpfCopilator.Parser;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using wpfCopilator.TextPages;
+using System.Linq;
 
 namespace wpfCopilator
 {
@@ -351,6 +352,8 @@ namespace wpfCopilator
         #endregion
         private async void button_Play_Click(object sender, RoutedEventArgs e)
         {
+            tE.Text = "";
+
             if (mainTabControl.Items.Count == 0) return;
 
             this.Cursor = Cursors.AppStarting;
@@ -363,17 +366,18 @@ namespace wpfCopilator
 
             List<Token> tokens = await Task.Run(() => EnumAnalyzer.AnalyzeAsync(text));//Вызов Анализатора
             //(List<Token> result, List<Token> errors) parsedTokens = await Task.Run(() =>  Grammatic.Parse(tokens));//Вызов парсера
-            (List<Token> result, List<string> errors) parsedTokens = Grammatic.Parse(tokens);//Вызов парсера
+            //(List<Token> result, List<string> errors) parsedTokens = Grammatic.Parse(tokens);//Вызов парсера
 
             
             _updateErrorDataGrid(tokens, _selectedItem.Tag.ToString());
 
-
             tE.Text = "";
-            parsedTokens.result.ForEach(token => { tE.Text += token.Text; } );              
 
-            tE.Text += "\nErrors:\n";
-            parsedTokens.errors.ForEach(token => { tE.Text += token + "\n"; } );
+            foreach (Token token in tokens) 
+            {
+                if(token.Type.Name != TokenType.TokenTypes.Space && token.Type.Name != TokenType.TokenTypes.Error)
+                    tE.Text += token.Type.Name + ": " + token.Text + "\n";
+            }
 
             this.Cursor = Cursors.Arrow;
         }

@@ -31,14 +31,17 @@ namespace wpfCopilator.Analyzer
 
         static private List<TokenType> _tokens = new List<TokenType>()
         {
-            new TokenType(11, TokenTypes.Enumeration, @"[A-Z]+\b"),
-            new TokenType(12, TokenTypes.KeyWord, @"enum\b"),
-            new TokenType(13, TokenTypes.ID, @"[a-zA-Z_][a-zA-Z0-9_]*\b"),
+            //new TokenType(11, TokenTypes.Enumeration, @"[A-Z]+\b"),
+            //new TokenType(12, TokenTypes.KeyWord, @"enum\b"),
+            //new TokenType(13, TokenTypes.ID, @"[a-zA-Z_][a-zA-Z0-9_]*\b"),
             new TokenType(24, TokenTypes.Space, @"[ \t\n\r]+"),
-            new TokenType(35, TokenTypes.Сomma, @","),
-            new TokenType(46, TokenTypes.LPar, @"{"),
-            new TokenType(57, TokenTypes.RPar, @"}"),
-            new TokenType(68, TokenTypes.Semicolon, @";")
+            //new TokenType(35, TokenTypes.Сomma, @","),
+            //new TokenType(46, TokenTypes.LPar, @"{"),
+            //new TokenType(57, TokenTypes.RPar, @"}"),
+            new TokenType(68, TokenTypes.ISBN13, @"\d{3}-\d-\d{5}-\d{3}-\d"),
+            new TokenType(68, TokenTypes.Email, @"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"),
+            new TokenType(68, TokenTypes.WordWithoutEndT, @"\b\w+(?<![tT])\b"),
+            //new TokenType(68, TokenTypes.Semicolon, @";")
         };
 
         static public ReadOnlyCollection<TokenType> Tokens => _tokens.AsReadOnly<TokenType>();
@@ -54,7 +57,11 @@ namespace wpfCopilator.Analyzer
             LPar,
             RPar,
             Semicolon,
-            Error
+            Error,
+            WordWithoutEndT,
+            Email,
+            ISBN13
+
         }
     }
 }
