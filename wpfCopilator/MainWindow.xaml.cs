@@ -376,7 +376,7 @@ namespace wpfCopilator
             foreach (Token token in tokens) 
             {
                 if(token.Type.Name != TokenType.TokenTypes.Space && token.Type.Name != TokenType.TokenTypes.Error)
-                    tE.Text += token.Type.Name + ": " + token.Text + "\n";
+                    tE.Text += token.Type.Name + ": " + token.Text + $"\t\tПозиция: line {token.PosLine}, column {token.PosStart}" + "\n";
             }
 
             this.Cursor = Cursors.Arrow;
