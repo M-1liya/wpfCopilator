@@ -367,12 +367,20 @@ namespace wpfCopilator
             
             if(parsedTokens)
             {
-                tE.Text += "Все круто!";
+                tE.Text += "Output:\n";
+                foreach(string output in Grammatic.Output)
+                    tE.Text += output;
+
+                if(Grammatic.ErrorMessage.Count > 0)
+                {
+                    tE.Text += "\n\n Errors:\n";
+                    Grammatic.ErrorMessage.ForEach(output => tE.Text += output + "\n");
+                }
             }
             else
             {
-                
-                tE.Text += "Error:\n" + Grammatic.ErrorMessage;
+                tE.Text += "\n\n Errors:\n";
+                Grammatic.ErrorMessage.ForEach(output => tE.Text += output + "\n");
             }
             
             _updateErrorDataGrid(tokens, _selectedItem.Tag.ToString());

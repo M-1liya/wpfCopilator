@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Documents;
 using wpfCopilator.Analyzer;
@@ -9,10 +10,12 @@ namespace wpfCopilator.Parser
     public static partial class Grammatic
     {
         private static List<Token> input = new();
-        private static string error;
+        private static List<string> output = new();
+        private static List<string> error = new();
         private static int position;
 
-        public static string ErrorMessage => error;
+        public static ReadOnlyCollection<string> Output => output.AsReadOnly<string>();
+        public static List<string> ErrorMessage => error;
         private static Token? CurrentToken => position < input.Count ? input[position] : null;
 
         private static void Consume() => position++;
@@ -30,7 +33,9 @@ namespace wpfCopilator.Parser
 
         public static bool RecursiveParse(IEnumerable<Token> tokens)
         {
-            input = new List<Token>(tokens.Where(t => t.Type.Name != TokenType.TokenTypes.Space));
+            input = new List<Token>(tokens.Where(t => t.Type.Name != TokenType.TokenTypes.Space && t.Type.Name != TokenType.TokenTypes.Error));
+            output.Clear();
+            error.Clear();
             position = 0;
 
             
@@ -41,8 +46,8 @@ namespace wpfCopilator.Parser
             }
             catch (ParseException ex)
             {
-                error = ex.Message;
-                return false;
+                error.Add(ex.Message);
+                return true;
             }
             finally
             {
@@ -54,92 +59,164 @@ namespace wpfCopilator.Parser
 
         private static void Parse()
         {
+            try
+            {
+                E();
+            }
+            catch (ParseException ex)
+            {
+                error.Add(ex.Message);
 
-            E();
+                if(position < input.Count) 
+                    E();
+            }
+ 
             if (position < input.Count)
                 throw new ParseException($"Unexpected token at position {CurrentToken.PosLine}:{CurrentToken.PosStart}: {CurrentToken.Type.Name}");
         }
 
         private static void E()
         {
-            T();
+            output.Add(" E ");
+
+            try
+            {
+                T();
+            }
+            catch (ParseException ex)
+            {
+                error.Add(ex.Message);
+                if (position < input.Count)
+                    T();
+            }
+
             while (CurrentToken != null && CurrentToken.Type.Name == TokenType.TokenTypes.PlusMinus)
             {
                 Consume();
-                T();
+                try
+                {
+                    T();
+                }
+                catch (ParseException ex)
+                {
+                    error.Add(ex.Message);
+                    if (position < input.Count)
+                        T();
+                }
             }
         }
 
         private static void T()
         {
-            F();
+            output.Add(" T ");
+            try
+            {
+                F();
+            }
+            catch (ParseException ex)
+            {
+                error.Add(ex.Message);
+                if (position < input.Count)
+                    F();
+            }
+
             while (CurrentToken != null && CurrentToken.Type.Name == TokenType.TokenTypes.MultDevide)
             {
                 Consume();
-                F();
+                try
+                {
+                    F();
+                }
+                catch (ParseException ex)
+                {
+                    error.Add(ex.Message);
+                    if (position < input.Count)
+                        F();
+                }
             }
         }
 
         private static void F()
         {
-            V();
+            output.Add(" F ");
+
+            try
+            {
+                V();
+            }
+            catch (ParseException ex)
+            {
+                error.Add(ex.Message);
+                if (position < input.Count)
+                    V();
+            }
+
             if (CurrentToken != null && CurrentToken.Type.Name == TokenType.TokenTypes.Exponentiation)
             {
                 Consume();
-                F();
+                try
+                {
+                    F();
+                }
+                catch (ParseException ex)
+                {
+                    error.Add(ex.Message);
+                    if (position < input.Count)
+                        F();
+                }
             }
         }
 
         private static void V()
         {
+            output.Add(" V ");
+
             if (Match(TokenType.TokenTypes.LPar))
             {
-                E();
+                output.Add(" ( ");
+                try
+                {
+                    E();
+                }
+                catch (ParseException ex)
+                {
+                    error.Add(ex.Message);
+                    if (position < input.Count)
+                        E();
+                }
+
                 if (!Match(TokenType.TokenTypes.RPar))
+                {
                     throw new ParseException("Expected closing parenthesis");
+                }
+                output.Add(" ) ");
             }
             else if (CurrentToken != null && CurrentToken.Type.Name == TokenType.TokenTypes.ID) // id
             {
+                output.Add(" id ");
                 Consume();
                 return;
             }
             else if (CurrentToken != null && CurrentToken.Type.Name == TokenType.TokenTypes.Operand) // number
             {
+                output.Add(" number ");
                 Consume();
                 return;
             }
             else if (CurrentToken == null) // ε (пустой символ)
             {
+                output.Add(" ε ");
                 return;
             }
             else
             {
-                throw new ParseException($"Unexpected character at position {position}: {CurrentToken}");
+                output.Add(" ε ");
+                return;
+                //throw new ParseException($"Unexpected character at position {CurrentToken.PosLine}:{CurrentToken.PosStart}: {CurrentToken.Type.Name}");
             }
         }
 
-        /*
-        private static void Id()
-        {
-            if (!char.IsLetter(CurrentToken))
-                throw new Exception($"Expected identifier at position {position}, but got: {CurrentToken}");
 
-            while (char.IsLetterOrDigit(CurrentToken))
-            {
-                Consume();
-            }
-        }
-
-        private static void Number()
-        {
-            if (!char.IsDigit(CurrentToken))
-                throw new Exception($"Expected number at position {position}, but got: {CurrentToken}");
-
-            while (char.IsDigit(CurrentToken))
-            {
-                Consume();
-            }
-        }*/
     }
 
     internal class ParseException : Exception 
