@@ -32,10 +32,13 @@ namespace wpfCopilator.Analyzer
         static private List<TokenType> _tokens = new List<TokenType>()
         {
             new TokenType(11, TokenTypes.Operand, @"[0-9]+"),
-            new TokenType(12, TokenTypes.Operation, @"[+\-\*\/]"),
+            new TokenType(12, TokenTypes.PlusMinus, @"[+\-]"),
+            new TokenType(12, TokenTypes.MultDevide, @"[*\/]"),
+            new TokenType(12, TokenTypes.Exponentiation, @"\^"),
             new TokenType(46, TokenTypes.LPar, @"\("),
             new TokenType(57, TokenTypes.RPar, @"\)"),
-            new TokenType(24, TokenTypes.Space, @"[ \t\n\r]+"),
+            new TokenType(13, TokenTypes.ID, @"[a-zA-Z_][a-zA-Z0-9_]*\b"),
+            new TokenType(24, TokenTypes.Space, @"[ \t\n\r]+")
         };
 
         static public ReadOnlyCollection<TokenType> Tokens => _tokens.AsReadOnly<TokenType>();
@@ -53,7 +56,10 @@ namespace wpfCopilator.Analyzer
             LPar,
             RPar,
             Semicolon,
-            Error
+            Error,
+            PlusMinus,
+            MultDevide,
+            Exponentiation
         }
     }
 }

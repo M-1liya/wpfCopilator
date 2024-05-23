@@ -9,7 +9,7 @@ using static wpfCopilator.Analyzer.TokenType;
 
 namespace wpfCopilator.Parser
 {
-    public static class Grammatic
+    public static partial class Grammatic
     {
         public static (List<Token> result, List<Token> errors) Parse(List<Token> tokens)
         {
@@ -102,7 +102,6 @@ namespace wpfCopilator.Parser
             else
                 return false;
         }
-
         public static (List<Token> result, string expression) ParsePOLIZ(List<Token> stack1)
         {
             (List<Token> tokens, string error) = RecursiveDescentParser(stack1);
@@ -193,7 +192,6 @@ namespace wpfCopilator.Parser
 
             return stack2;
         }
-
         private static void process(List<Token> stack2, List<TokenPoliz> stack3, TokenPoliz token)
         {
             while (stack3.Count != 0 && (stack3[0].Priority >= token.Priority || (stack3[0].Token.Type.Name == TokenTypes.LPar && token.Token.Type.Name == TokenTypes.RPar)))
@@ -206,9 +204,6 @@ namespace wpfCopilator.Parser
             if(token.Priority != 1)
                 stack3.Insert(0, token);
         }
-
-
-
         private static (List<Token> result, string error) RecursiveDescentParser(List<Token> tokens)
         {
             List<Token> stack = new List<Token>();
@@ -339,6 +334,8 @@ namespace wpfCopilator.Parser
             }
 
         }
+
+
 
     }
 
