@@ -32,6 +32,10 @@
     <None Remove="ManualPages\ManualAssets\CreateNewFile.png" />
     <None Remove="ManualPages\ManualAssets\MenuEdit.png" />
     <None Remove="ManualPages\ManualAssets\PanelTool.png" />
+    <None Remove="Text\analyze.PNG" />
+    <None Remove="Text\grammar.PNG" />
+    <None Remove="Text\literal.PNG" />
+    <None Remove="Text\setgrammar.PNG" />
   </ItemGroup>
 
   <ItemGroup>
@@ -61,6 +65,10 @@
     <Resource Include="ManualPages\ManualAssets\CreateNewFile.png" />
     <Resource Include="ManualPages\ManualAssets\MenuEdit.png" />
     <Resource Include="ManualPages\ManualAssets\PanelTool.png" />
+    <Resource Include="Text\analyze.PNG" />
+    <Resource Include="Text\grammar.PNG" />
+    <Resource Include="Text\literal.PNG" />
+    <Resource Include="Text\setgrammar.PNG" />
   </ItemGroup>
 
   <ItemGroup>

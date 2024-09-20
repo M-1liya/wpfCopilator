@@ -1,0 +1,13 @@
+﻿<Window x:Class="wpfCopilator.Text.Codes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:wpfCopilator.Text"
+        mc:Ignorable="d"
+        Title="Codes" Height="450" Width="800">
+    <Grid>
+        <TextBlock HorizontalAlignment="Center" Margin="0,40,0,0" TextWrapping="Wrap" Text="Исходный код можно найти здесь: https://github.com/M-1liya/wpfCopilator/tree/AlexPetushkovTree" VerticalAlignment="Top" Height="194" Width="780" FontSize="20"/>
+
+    </Grid>
+</Window>

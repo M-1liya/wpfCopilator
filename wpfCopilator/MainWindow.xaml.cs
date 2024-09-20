@@ -23,6 +23,8 @@ using System.Diagnostics;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using ComboBox = System.Windows.Controls.ComboBox;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using wpfCopilator.Text;
 
 namespace wpfCopilator
 {
@@ -167,10 +169,10 @@ namespace wpfCopilator
             TextEditor textBox = item.Content as TextEditor;
             item.Background = Brushes.White;
 
-            if (item.Tag == String.Empty)
+            if (item.Tag == string.Empty)
             {
                 CommandSaveAs_Executed(sender, e);
-                if (item.Tag == String.Empty)
+                if (item.Tag == string.Empty)
                 {
                     File.Delete(Environment.CurrentDirectory + "//" + "tempFilesDirectory//" + item.Header + ".txt");
                     return;
@@ -205,7 +207,7 @@ namespace wpfCopilator
             if (window.FileName != null)
             {
                 string path = Environment.CurrentDirectory + "//" + "tempFilesDirectory//" + window.FileName + ".txt";
-                OpenNewFile(window.FileName, String.Empty, String.Empty);
+                OpenNewFile(window.FileName, string.Empty, string.Empty);
             }
         }
         #endregion
@@ -356,8 +358,46 @@ namespace wpfCopilator
         }
         private void MenuItemText_Click(object sender, RoutedEventArgs e)
         {
-            var url = "https://github.com/M-1liya/wpfCopilator/tree/AlexPetushkovTree";
-            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+            MenuItem item = sender as MenuItem;
+
+            //var url = "https://github.com/M-1liya/wpfCopilator/tree/AlexPetushkovTree";
+            //Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+
+            switch (item.Header)
+            {
+                case "Постановка задачи":
+                    SettingTask settingTask = new SettingTask();
+                    settingTask.Show();
+                    break;
+                case "Грамматика":
+                    Grammar grammar = new Grammar();
+                    grammar.Show();
+                    break;
+                case "Постановка грамматики":
+                    SettingGrammar settingGrammar = new SettingGrammar();
+                    settingGrammar.Show();
+                    break;
+                case "Метод анализа":
+                    AnalyzeMethod analyzeMethod = new AnalyzeMethod();
+                    analyzeMethod.Show();
+                    break;
+                case "Диагностика и нейтрализация ошибок":
+                    Diagnostic diagnostic = new Diagnostic();
+                    diagnostic.Show();
+                    break;
+                case "Список литературы":
+                    TestEx testEx = new TestEx();
+                    testEx.Show();
+                    break;
+                case "Исходных код программы":
+                    Codes codes = new Codes();
+                    codes.Show();
+                    break;
+                case "Тестовый пример":
+                    string testCase = "final String str1 = \" Java\"; final String str2 = \"new Java\";";
+                    OpenNewFile(string.Format("TestFile"), Environment.CurrentDirectory, testCase);
+                    break;
+            }
         }
         private void MenuItemTextTest_Click(object sender, RoutedEventArgs e)
         {
