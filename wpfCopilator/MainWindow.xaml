@@ -107,14 +107,14 @@
                 <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.SELECTALL]}" Command="SelectAll"/>
             </MenuItem>
             <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.TEXT]}">
-                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.PROBLEMSTATEMENT]}" Click="MenuItem_Click"/>
-                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.GRAMMAR]}" Click="MenuItem_Click"/>
-                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.GRAMMARSETTING]}" Click="MenuItem_Click"/>
-                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.ANALYSISMETHOD]}" Click="MenuItem_Click"/>
-                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.DIAGNOSISANDNEUTRALIZATIONOFERRORS]}" Click="MenuItem_Click"/>
-                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.TESTCASE]}" Click="MenuItem_Click"/>
-                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.REFERENCE]}" Click="MenuItem_Click"/>
-                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.PROGRAMSOURCECODE]}" Click="MenuItem_Click"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.PROBLEMSTATEMENT]}" Click="MenuItemText_Click"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.GRAMMAR]}" Click="MenuItemText_Click"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.GRAMMARSETTING]}" Click="MenuItemText_Click"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.ANALYSISMETHOD]}" Click="MenuItemText_Click"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.DIAGNOSISANDNEUTRALIZATIONOFERRORS]}" Click="MenuItemText_Click"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.TESTCASE]}" Click="MenuItemTextTest_Click"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.REFERENCE]}" Click="MenuItemText_Click"/>
+                <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.PROGRAMSOURCECODE]}" Click="MenuItemText_Click"/>
             </MenuItem>
 
             <MenuItem Header="{Binding Source={StaticResource helper}, Path=[LocalizationRes.START]}"/>
@@ -257,7 +257,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Что-то с чем-то">
+            <TabItem Header="Лог">
                 <TextBlock Name ="somethingTextBlock"  FontSize ="{Binding ElementName=sliderScale,Path=Value}" TextWrapping="Wrap" ></TextBlock>
             </TabItem>
             <TabItem Header="История операций">

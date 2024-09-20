@@ -20,13 +20,16 @@ using System.Data;
 using ICSharpCode.AvalonEdit.Rendering;
 using System.Reflection.Metadata;
 using System.Diagnostics;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using ComboBox = System.Windows.Controls.ComboBox;
 
 namespace wpfCopilator
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml +
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : System.Windows.Window
     {
         OpenFileDialog _openDialog = new OpenFileDialog();
         SaveFileDialog _saveDialog = new SaveFileDialog();
@@ -168,7 +171,12 @@ namespace wpfCopilator
             {
                 CommandSaveAs_Executed(sender, e);
                 if (item.Tag == String.Empty)
+                {
+                    File.Delete(Environment.CurrentDirectory + "//" + "tempFilesDirectory//" + item.Header + ".txt");
                     return;
+
+                }
+
             }
             StreamWriter writer = new StreamWriter(Convert.ToString(item.Tag));
             writer.WriteLine(textBox.Text);
@@ -334,6 +342,10 @@ namespace wpfCopilator
                 {
                     return;
                 }
+                else
+                {
+                    File.Delete(Environment.CurrentDirectory + "//" + "tempFilesDirectory//" + closingItem.Header + ".txt");
+                }
             }
             mainTabControl.Items.Remove(closingItem);
         }
@@ -342,7 +354,16 @@ namespace wpfCopilator
             TabItem changeItem = mainTabControl.SelectedItem as TabItem;
             changeItem.Background = Brushes.Gray;
         }
-        #endregion
+        private void MenuItemText_Click(object sender, RoutedEventArgs e)
+        {
+            var url = "https://github.com/M-1liya/wpfCopilator/tree/AlexPetushkovTree";
+            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+        }
+        private void MenuItemTextTest_Click(object sender, RoutedEventArgs e)
+        {
+            string testCase = "final String str1 = \" Java\"; final String str2 = \"new Java\";";
+            OpenNewFile(string.Format("TestFile"), Environment.CurrentDirectory, testCase);
+        }
         private void button_Play_Click(object sender, RoutedEventArgs e)
         {
             LogOutputText.Text = string.Empty;
@@ -351,10 +372,6 @@ namespace wpfCopilator
             string text = textBox.Text;
             textBox.TextArea.TextView.LineTransformers.Clear();
 
-            { //Лаб 2
-                foreach (string token in LexicalAnalyzer.OutputData(Convert.ToString(text), textBox.Document))
-                    LogOutputText.Text += token + "\n";
-            }
             { // Лаб 3-4
                 Parser.StartParser(Convert.ToString(text), item.Header.ToString(), textBox.Document);
                 somethingTextBlock.Text = Parser.rightLexeme;
@@ -366,6 +383,11 @@ namespace wpfCopilator
                 else
                 {
                     Parser.DeleteErrors(textBox.Document);
+                }
+                text = textBox.Text; //Перезапись с исправлениями
+                { //Лаб 2
+                    foreach (string token in LexicalAnalyzer.OutputData(Convert.ToString(text), textBox.Document))
+                        LogOutputText.Text += token + "\n";
                 }
                 foreach (string token in Parser.errorStrings)
                     somethingTextBlock.Text += "\n" + token;
@@ -381,6 +403,8 @@ namespace wpfCopilator
             MatchCollection matches = regex.Matches(text);*/
 
         }
+        #endregion
+
         private void comboBoxLocalization_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox? comboBox = sender as ComboBox;
@@ -396,10 +420,6 @@ namespace wpfCopilator
             }
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            var url = "https://github.com/M-1liya/wpfCopilator/tree/AlexPetushkovTree";
-            Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
-        }
+
     }
 }

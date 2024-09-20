@@ -26,6 +26,7 @@ namespace wpfCopilator
         {
             {
                 rightLexeme = string.Empty;
+                rightLexeme += "Правильная строка:";
                 colorizers.Clear();
                 lastIndexPrew = 0;
                 errorStrings.Clear();
@@ -34,8 +35,10 @@ namespace wpfCopilator
             }
             RegexOptions options = RegexOptions.Singleline | RegexOptions.ExplicitCapture;
             int n = 0;
+            int iteration = 0;
             foreach (Match match in Regex.Matches(input, Tokens.parserPattern, options))
             {
+                iteration++;
                 Console.WriteLine(match.Value);
                 string errorString = string.Empty;
                     foreach (Group group in match.Groups)
@@ -54,6 +57,96 @@ namespace wpfCopilator
                         n = group.Index + group.Length;
                     rightLexeme += " " + group.Value;
                     }
+            }
+            if(iteration == 0)
+            {
+                int numberEx = 0;
+                int countFor = 0;
+                int endGroupMatch = 0;
+                foreach(string input1 in Tokens.patternDissmis)
+                {
+                    numberEx++;
+                    foreach (Match match in Regex.Matches(input, input1, options))
+                    {
+                        countFor++;
+                        Console.WriteLine(match.Value);
+                        string errorString = string.Empty;
+                        foreach (Group group in match.Groups)
+                        {
+                            if (group == match.Groups[0])
+                                continue;
+                            if (group.Index != 0)
+                            {
+                                //endGroupMatch = group.Index + group.Length;
+                                errorString = input.Substring(n, group.Index - n);
+                                placeErrors.Add((n, group.Index - n));
+                                if (n + 1 != group.Index)
+                                    colorizers.Add(new UnderlineColorizer { StartOffset = n, EndOffset = group.Index });
+                                TextLocation location = document.GetLocation(n + 1);
+                                AddErrors(errorString, group.Name, fileName, location);
+                            }
+                            n = group.Index + group.Length;
+                            rightLexeme += " " + group.Value;
+                        }
+                    }
+                    if (countFor == 0)
+                        break;
+                    else
+                    {
+                        countFor = 0;
+                        iteration++;
+                    }
+                        
+                }
+                string waitItem = "";
+                string oldInput = input;
+                if (numberEx != iteration)
+                {
+                    switch (numberEx)
+                    {
+                        case 1:
+                            waitItem = " final ";
+                            input = input.Insert(n, " final ");
+                            document.Text = input;
+                            break;
+                        case 2:
+                            waitItem = " String ";
+                            input = input.Insert(n, " String ");
+                            document.Text = input;
+                            break;
+                        case 3:
+                            waitItem = " ID ";
+                            input = input.Insert(n, " ID ");
+                            document.Text = input;
+                            break;
+                        case 4:
+                            waitItem = " AssignmentOperator ";
+                            input = input.Insert(n, " = ");
+                            document.Text = input;
+                            break;
+                        case 5:
+                            waitItem = " Row ";
+                            input = input.Insert(n, " \"Text\" ");
+                            document.Text = input;
+                            break;
+                        case 6:
+                            waitItem = " EndofOperator ";
+                            input = input.Insert(n, " ; ");
+                            document.Text = input;
+                            break;
+                    }
+                    StartParser(input, fileName, document);
+                    if(waitItem.Length != 0)
+                    {
+                        
+                        string error = string.Format("Ошибка компиляции: Ожидалось") + waitItem;
+                        errorStrings.Insert(0, error);
+                        data.Insert(0, new MyData { FileName = fileName, Line = "1", Column = "1", Message = error });
+                        //data.Add(new MyData { FileName = fileName, Line = "1", Column = "1", Message = error });
+                        error = string.Format("Ошибочная строка на входе: ") + oldInput;
+                        errorStrings.Insert(0, error);
+                    }
+                }
             }
         }
         static private void AddErrors(string error, string name, string fileName, TextLocation location)
